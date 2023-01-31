@@ -81,4 +81,5 @@ public class player extends person implements Serializable {
         result = 31 * result + (headline != null ? headline.hashCode() : 0);
         return result;
     }
+    
 }

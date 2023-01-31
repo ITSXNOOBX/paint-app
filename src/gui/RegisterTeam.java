@@ -33,6 +33,7 @@ import javax.swing.ImageIcon;
 
 public class RegisterTeam extends JFrame {
 
+	static RegisterTeam frame;
 	private ArrayList<JButton> windowButtons = new ArrayList<JButton>();
 	private JPanel contentPanel;
 	private JTextField teamNameTxb;
@@ -45,7 +46,7 @@ public class RegisterTeam extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					RegisterTeam frame = new RegisterTeam();
+					frame = new RegisterTeam();
 					frame.setUndecorated(true); // Disable windows controls
 					WindowUtils.handleMouseDrag(frame, true);
 					frame.setVisible(true);
@@ -54,6 +55,13 @@ public class RegisterTeam extends JFrame {
 				}
 			}
 		});
+	}
+	
+	public static void close() {
+		if (frame == null) return;
+		WindowUtils.handleMouseDrag(frame, false);
+		frame.setVisible(false);
+		frame.dispose();
 	}
 
 	/**
@@ -94,7 +102,8 @@ public class RegisterTeam extends JFrame {
 		JButton closeButton = new JButton("");
 		closeButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				System.exit(0);
+//				System.exit(0);
+				 close();
 			}
 		});
 		closeButton.setIcon(new ImageIcon(RegisterTeam.class.getResource("/assets/close-24.png")));

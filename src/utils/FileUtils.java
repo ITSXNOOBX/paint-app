@@ -16,6 +16,7 @@ public class FileUtils {
     public static final String appdata = System.getenv("APPDATA");
     public static final String root = appdata + "/paint-app";
     public static final String logs_root = root + "/logs";
+    public static final String cache_root = root + "/cache";
     
     public static final String path_log = logs_root + "/"+ new SimpleDateFormat("dd-MM-yyyy_HH-mm-ss").format(new Date()) + "_paint-app.log";
     public static final String path_teams = root + "/teams_data.bin";
@@ -42,9 +43,16 @@ public class FileUtils {
 		}
         return true;
     }
+    public static Boolean clearDirectory(File dir) {
+    	for(File file : dir.listFiles()) 
+    	    if (!file.isDirectory()) 
+    	        file.delete();
+    	return true;
+    }
     
     public static boolean writeObjectToFile(ArrayList<?> obj) {
-        String path = "";
+        Boolean status = true;
+    	String path = "";
         if (obj == null || obj.size() == 0) {
         	return false;
         } else if(obj.get(0) instanceof coach) {
@@ -54,7 +62,7 @@ public class FileUtils {
         } else if(obj.get(0) instanceof team) {
             path = path_teams;
         } else {
-        	return false;
+        	status = false;
         }
 
         try {
@@ -68,10 +76,10 @@ public class FileUtils {
             oos.close();
             fos.close();
         } catch (IOException e) {
-            e.printStackTrace();
-            return false;
+//            e.printStackTrace();
+        	status = false;
         }
-        return true;
+        return status;
     }
 
     public static Object readObjectsFromFile(String obj_type) {
@@ -99,12 +107,20 @@ public class FileUtils {
             ois.close();
         } catch (ClassNotFoundException d) {
             // TODO Auto-generated catch block
-//            d.printStackTrace();
-//        		return null;
+        	// d.printStackTrace();
+        } catch (InvalidClassException d) {
+            // TODO Auto-generated catch block
+        	File corrupted = new File(path);
+    		logToFile("Corrupted file: '" + corrupted.getAbsolutePath() + "'");
+    		if (corrupted.delete()) {
+    			logToFile("Successfully removed corrupted file.");
+    		} else {
+    			logToFile("Could not delete corrupted file.");
+        		corrupted.deleteOnExit();
+    		}
         } catch (IOException d) {
             // TODO Auto-generated catch block
-//            d.printStackTrace();
-//        	return null;
+        	// return null;
         }
         return temp;
     }

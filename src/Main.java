@@ -39,6 +39,7 @@ public class Main {
         if (!app_folder.isDirectory()){
             app_folder.mkdirs();
             new File(FileUtils.logs_root).mkdirs();
+            new File(FileUtils.cache_root).mkdirs();
             first_run = true;
             FileUtils.logToFile("Folders created successfully.");
         }
@@ -49,8 +50,8 @@ public class Main {
         	FileUtils.logToFile("Failed to read data from previous sessions.");
         }
 		
-//		MainForm.main(args);
-		RegisterTeam.main(args);
+		MainForm.main(args);
+//		RegisterTeam.main(args);
         FileUtils.logToFile("Program succesfully executed.");   
         
         Runtime.getRuntime().addShutdownHook(new Thread() {

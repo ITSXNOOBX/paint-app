@@ -10,7 +10,7 @@ import java.util.Objects;
 public class team implements Serializable {
     private String name;
     private String code;
-    private Integer klasifikation;
+    private Integer classification;
     private Integer points;
     private ArrayList<player> players;
     private coach coach;
@@ -19,7 +19,7 @@ public class team implements Serializable {
     public team() {
         this.name = "";
         this.code = "";
-        this.klasifikation = 0;
+        this.classification = 0;
         this.points = 0;
         this.players = new ArrayList<player>();
         this.coach = null;
@@ -28,16 +28,16 @@ public class team implements Serializable {
     public team(String name, String code) {
         this.name = name;
         this.code = code;
-        this.klasifikation = 0;
+        this.classification = 0;
         this.points = 0;
         this.players = new ArrayList<player>();
         this.coach = null;
     }
 
-    public team(String name, String code, Integer klasifikation, Integer points, ArrayList<player> players, coach coach) {
+    public team(String name, String code, Integer classification, Integer points, ArrayList<player> players, coach coach) {
         this.name = name;
         this.code = code;
-        this.klasifikation = klasifikation;
+        this.classification = classification;
         this.points = points;
         this.players = players;
         this.coach = coach;
@@ -46,7 +46,7 @@ public class team implements Serializable {
     public team(team other) {
         this.name = other.name;
         this.code = other.code;
-        this.klasifikation = other.klasifikation;
+        this.classification = other.classification;
         this.points = other.points;
         this.players = new ArrayList<player>(other.players);
         this.coach = other.coach;
@@ -69,14 +69,14 @@ public class team implements Serializable {
     }
 
     public Integer getKlasifikation() {
-        return klasifikation;
+        return classification;
     }
 
-    public void setKlasifikation(Integer klasifikation) {
-        this.klasifikation = klasifikation;
+    public void setKlasifikation(Integer classification) {
+        this.classification = classification;
     }
 
-    public Integer getPoints() {
+	public Integer getPoints() {
         return points;
     }
 
@@ -117,4 +117,9 @@ public class team implements Serializable {
         result = 31 * result + (code != null ? code.hashCode() : 0);
         return result;
     }
+    
+    @Override
+	public String toString() {
+		return name;
+	}
 }

@@ -14,6 +14,7 @@ import utils.WindowUtils;
 
 public class RegisterPlayer extends JFrame {
 
+	static RegisterPlayer frame;
 	private ArrayList<JButton> windowButtons = new ArrayList<JButton>();
 	private JPanel contentPane;
 
@@ -24,7 +25,7 @@ public class RegisterPlayer extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					RegisterPlayer frame = new RegisterPlayer();
+					frame = new RegisterPlayer();
 					frame.setUndecorated(true); // Disable windows controlls
 					WindowUtils.handleMouseDrag(frame, true);
 					frame.setVisible(true);
@@ -33,6 +34,13 @@ public class RegisterPlayer extends JFrame {
 				}
 			}
 		});
+	}
+	
+	public static void close() {
+		if (frame == null) return;
+		WindowUtils.handleMouseDrag(frame, false);
+		frame.setVisible(false);
+		frame.dispose();
 	}
 
 	/**

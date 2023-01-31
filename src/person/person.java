@@ -76,4 +76,9 @@ public class person implements Serializable {
     public int hashCode() {
         return nan != null ? nan.hashCode() : 0;
     }
+    
+    @Override
+	public String toString() {
+		return name;
+	}
 }
