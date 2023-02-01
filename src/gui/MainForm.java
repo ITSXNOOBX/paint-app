@@ -70,12 +70,16 @@ public class MainForm extends JFrame {
 	private JTextField homeHeadlineTexfield;
 	private JTextField homeAgeTextbox;
 	
-	private DefaultListModel<team> homeTeamData = new DefaultListModel<team>();
+	private static DefaultListModel<team> homeTeamData = new DefaultListModel<team>();
 	private DefaultListModel<player> homePlayerData = new DefaultListModel<player>();
 	private DefaultListModel<String> homeEmpty = new DefaultListModel<String>(); 
-	
+		
 	JList homePlayerList;
 	JList homeTeamList;
+	
+	static JComboBox<Object> setupSelectTeam;
+	static JComboBox<Object> setupSelectPlayer;
+	static JLabel setupSelectCoach;
 	
 	/**
 	 * Launch the application.
@@ -442,7 +446,35 @@ public class MainForm extends JFrame {
 		setupPlayerLbl.setBounds(20, 160, 174, 13);
 		setupLeagueWindow.add(setupPlayerLbl);
 		
-		JComboBox setupSelectTeam = new JComboBox();
+		setupSelectTeam = new JComboBox<Object>();
+		setupSelectTeam.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				team selected = (team) setupSelectTeam.getSelectedItem();
+				
+				Boolean hasPlayer = selected != null ? selected.getPlayers().size() > 0 : false;
+				Boolean hasCoach = selected != null ? selected.getCoach() != null : false;
+				
+				setupSelectPlayer.removeAllItems();
+				setupSelectPlayer.setEnabled(hasPlayer);
+				if (selected != null && hasPlayer) {
+//					setupSelectPlayer.addAll(selected.getPlayers());
+					for (Object p : selected.getPlayers()) {
+						
+						setupSelectPlayer.addItem(p);
+					}
+				} else {
+					setupSelectPlayer.addItem("No Players.");
+					
+				}
+				
+				setupSelectCoach.setEnabled(hasCoach);
+				if (selected != null && hasCoach) {
+					setupSelectCoach.setText(selected.getCoach().getName());
+				} else {
+					setupSelectCoach.setText("No Coach.");
+				}
+			}
+		});
 		setupSelectTeam.setBounds(295, 53, 265, 24);
 		setupLeagueWindow.add(setupSelectTeam);
 		
@@ -479,7 +511,7 @@ public class MainForm extends JFrame {
 		setupCreateTeamlbl.setBounds(20, 90, 174, 24);
 		setupLeagueWindow.add(setupCreateTeamlbl);
 		
-		JComboBox setupSelectPlayer = new JComboBox();
+		setupSelectPlayer = new JComboBox();
 		setupSelectPlayer.setBounds(295, 189, 265, 24);
 		setupLeagueWindow.add(setupSelectPlayer);
 		
@@ -492,13 +524,24 @@ public class MainForm extends JFrame {
 		JButton setupDeleteTeam = new JButton("Delete");
 		setupDeleteTeam.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				team selected = (team) setupSelectTeam.getSelectedItem();
+				if (selected == null) return;
+					
+				for (int i = 0; i < DataUtils.teams.size(); i++) {
+					team iteam = DataUtils.teams.get(i);
+					if (selected.equals(iteam)) {
+						FileUtils.logToFile("Deleted team '" + iteam.getName() + "' with code '" + iteam.getCode() + "'");
+						DataUtils.teams.remove(i);
+					}
+				}
+				
 				onTeamsChanged();
 			}
 		});
 		setupDeleteTeam.setBounds(295, 126, 265, 24);
 		setupLeagueWindow.add(setupDeleteTeam);
 		
-		JLabel setupDeleteTeamlbl = new JLabel("Create Team");
+		JLabel setupDeleteTeamlbl = new JLabel("Delete Team");
 		setupDeleteTeamlbl.setForeground(Color.WHITE);
 		setupDeleteTeamlbl.setFont(new Font("Arial", Font.PLAIN, 15));
 		setupDeleteTeamlbl.setBounds(20, 126, 174, 24);
@@ -550,7 +593,7 @@ public class MainForm extends JFrame {
 		lblCoach_1.setBounds(20, 325, 174, 24);
 		setupLeagueWindow.add(lblCoach_1);
 		
-		JLabel setupSelectCoach = new JLabel("");
+		setupSelectCoach = new JLabel("");
 		setupSelectCoach.setForeground(Color.WHITE);
 		setupSelectCoach.setFont(new Font("Arial", Font.PLAIN, 15));
 		setupSelectCoach.setBounds(295, 328, 265, 24);
@@ -675,7 +718,12 @@ public class MainForm extends JFrame {
 	}
 	
 	public static void onTeamsChanged() {
+		if (frame == null) return;
+		homeTeamData.clear(); homeTeamData.addAll(DataUtils.teams);
 		
+		int htdSize = homeTeamData.size();
+		setupSelectTeam.setEnabled(htdSize > 0);
+		WindowUtils.dlmToComboBoxAdd(homeTeamData, setupSelectTeam);	
 	}
 	
 	private void homeDisplayData(Boolean teamUpdated) {

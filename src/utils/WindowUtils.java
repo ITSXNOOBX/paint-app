@@ -9,7 +9,9 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 import java.util.ArrayList;
 
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
@@ -17,6 +19,13 @@ import javax.swing.JPanel;
 public class WindowUtils extends JFrame  {
     private static int mouseX, mouseY;
 	
+    public static void dlmToComboBoxAdd(DefaultListModel<?> dlm, JComboBox<Object> combo) {   
+    	combo.removeAllItems(); // Easyer to clean and set again :D
+    	for (int i = 0; i < dlm.getSize(); i++) {
+            combo.addItem(dlm.getElementAt(i));
+        }
+    }
+    
 	public static void handleMouseDrag(JFrame frame, Boolean enable) {
 		if (!enable) return;
         // Handle mouse drag

@@ -17,6 +17,7 @@ import javax.swing.border.EmptyBorder;
 import teams.team;
 import utils.DataUtils;
 import utils.FileUtils;
+import utils.NotifyUtils;
 import utils.WindowUtils;
 
 import java.awt.Color;
@@ -206,11 +207,11 @@ public class RegisterTeam extends JFrame {
 				String tCode = teamCodeTxb.getText().replace(" ", "-");
 				
 				if (tName.length() < 4 || tName.length() > 15) {
-                    JOptionPane.showMessageDialog(null, "The team name is invalid, please write at least 4 characters and less than 15 characters.", "User Error!", JOptionPane.ERROR_MESSAGE);
+					NotifyUtils.error("The team name is invalid, please write at least 4 characters and less than 15 characters.", "User Error!");
                     FileUtils.logToFile("User Error!, The team name is invalid, please write at least 4 characters and less than 15 characters.");
                     return;
 				} else if (tCode.length() != 4) {
-                    JOptionPane.showMessageDialog(null, "The team code must be 4 characters length", "User Error!", JOptionPane.ERROR_MESSAGE);
+					NotifyUtils.error("The team code must be 4 characters length", "User Error!");
                     FileUtils.logToFile("User Error!, The team code must be 4 characters length");
                     return;
 				}
@@ -222,14 +223,16 @@ public class RegisterTeam extends JFrame {
 				}
 				
 				if (already_exists) {
-                    JOptionPane.showMessageDialog(null, "This team already exists, please check the name and the code again!", "User Error!", JOptionPane.ERROR_MESSAGE);
+					NotifyUtils.error("This team already exists, please check the name and the code again!", "User Error!");
                     FileUtils.logToFile("User Error!, This team already exists, please check the name and the code again!");
                     return;
 				}
 				
 				DataUtils.teams.add(new team(tName, tCode));
+				MainForm.onTeamsChanged(); // Trigger team update event
 				
 		        FileUtils.logToFile("Added new team with name: " + tName + " and code: " + tCode);
+		        NotifyUtils.succeed("Successfully created team " +tName, null);
 			}
 		});
 		
