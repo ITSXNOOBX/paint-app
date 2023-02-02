@@ -18,12 +18,18 @@ import javax.swing.JPanel;
 @SuppressWarnings("serial")
 public class WindowUtils extends JFrame  {
     private static int mouseX, mouseY;
+    private static char[] number = {'1', '2', '3', '4', '5', '6', '7', '8', '9' };
 	
     public static void dlmToComboBoxAdd(DefaultListModel<?> dlm, JComboBox<Object> combo) {   
     	combo.removeAllItems(); // Easyer to clean and set again :D
     	for (int i = 0; i < dlm.getSize(); i++) {
             combo.addItem(dlm.getElementAt(i));
         }
+    }
+    
+    public static Boolean isNumberChar(char key) {   
+    	for (char n : number) if (n == key) return true;
+    	return false;
     }
     
 	public static void handleMouseDrag(JFrame frame, Boolean enable) {

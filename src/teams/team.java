@@ -92,6 +92,15 @@ public class team implements Serializable {
         this.players = players;
     }
 
+    public void addPlayer(player player) {
+        this.players.add(player);
+    }
+    
+    public void removePlayerIndex(Integer index) {
+        this.players.remove(index);
+    }
+
+    
     public person.coach getCoach() {
         return coach;
     }

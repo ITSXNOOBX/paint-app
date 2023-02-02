@@ -66,7 +66,7 @@ public class FileUtils {
         }
 
         try {
-            FileOutputStream fos = new FileOutputStream(path);
+        	FileOutputStream fos = new FileOutputStream(path);
             ObjectOutputStream oos = new ObjectOutputStream(fos);
 			
             for (int i = 0; i < obj.size(); i++) {
@@ -116,6 +116,7 @@ public class FileUtils {
     			logToFile("Successfully removed corrupted file.");
     		} else {
     			logToFile("Could not delete corrupted file.");
+				NotifyUtils.warn("Could not delete corrupted file. It be overwritten when closing the program. Spect data loss.", "App Error.");
         		corrupted.deleteOnExit();
     		}
         } catch (IOException d) {

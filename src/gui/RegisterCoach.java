@@ -26,22 +26,21 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
-import person.player;
+import person.coach;
 import teams.team;
 import utils.DataUtils;
 import utils.FileUtils;
 import utils.NotifyUtils;
 import utils.WindowUtils;
 
-public class RegisterPlayer extends JFrame {
-	static RegisterPlayer frame;
+public class RegisterCoach extends JFrame {
+	static RegisterCoach frame;
 	private ArrayList<JButton> windowButtons = new ArrayList<JButton>();
 	private JPanel contentPanel;
 	private JTextField playerName;
 	private JTextField playerSurname;
 	private JTextField playerNan;
 	private JTextField playerAge;
-	private JTextField playerNumber;
 
 	/**
 	 * Launch the application.
@@ -50,7 +49,7 @@ public class RegisterPlayer extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					frame = new RegisterPlayer(args.length > 0 ? args[0] : "Unknown");
+					frame = new RegisterCoach(args.length > 0 ? args[0] : "Unknown");
 					frame.setUndecorated(true); // Disable windows controls
 					WindowUtils.handleMouseDrag(frame, true);
 					frame.setVisible(true);
@@ -72,14 +71,14 @@ public class RegisterPlayer extends JFrame {
 	/**
 		 * Create the frame.
 		 */
-		public RegisterPlayer(String tName) {
+		public RegisterCoach(String tName) {
 			setResizable(false);
 			setIconImage(Toolkit.getDefaultToolkit().getImage(MainForm.class.getResource("/assets/painballogo.png")));
 			setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 //	        try {
 //				UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 //	        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e) { } // https://stackoverflow.com/a/11426036/15384495
-	        setTitle("Paintball Fed 2023 | Register Player");
+	        setTitle("Paintball Fed 2023 | Register Coach");
 	        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	        setBounds(100, 100, 580, 350);
 	        
@@ -96,12 +95,12 @@ public class RegisterPlayer extends JFrame {
 			contentPanel.add(header);
 			header.setLayout(null);
 			
-			JLabel lblCreateTeam = new JLabel("Create Player For Team: ");
+			JLabel lblCreateTeam = new JLabel("Create Coach For Team: ");
 			lblCreateTeam.setForeground(new Color(255, 255, 255));
 			lblCreateTeam.setBackground(new Color(45, 45, 48));
 			lblCreateTeam.setFont(new Font("Arial", Font.BOLD, 25));
 			lblCreateTeam.setVerticalAlignment(SwingConstants.CENTER);
-			lblCreateTeam.setBounds(54, 0, 290, 50);
+			lblCreateTeam.setBounds(54, 0, 308, 50);
 			header.add(lblCreateTeam);
 			
 			JButton closeButton = new JButton("");
@@ -129,25 +128,25 @@ public class RegisterPlayer extends JFrame {
 			playerName = new JTextField();
 			playerName.setForeground(new Color(255, 255, 255));
 			playerName.setBackground(new Color(62, 62, 66));
-			playerName.setBounds(319, 77, 149, 20);
+			playerName.setBounds(319, 102, 149, 20);
 			contentPanel.add(playerName);
 			playerName.setColumns(10);
 			
-			JLabel playerNamelbl = new JLabel("Player Name: ");
+			JLabel playerNamelbl = new JLabel("Coach Name: ");
 			playerNamelbl.setVerticalAlignment(SwingConstants.CENTER);
 			playerNamelbl.setForeground(Color.WHITE);
 			playerNamelbl.setFont(new Font("Arial", Font.BOLD, 15));
 			playerNamelbl.setBackground(new Color(45, 45, 48));
-			playerNamelbl.setBounds(109, 75, 133, 20);
+			playerNamelbl.setBounds(109, 100, 155, 20);
 			contentPanel.add(playerNamelbl);
 			
-			JLabel playerSurnameLbl = new JLabel("Player Surnames:");
+			JLabel playerSurnameLbl = new JLabel("Coach Surnames:");
 			playerSurnameLbl.setToolTipText("Separate each surname with comma.");
 			playerSurnameLbl.setVerticalAlignment(SwingConstants.CENTER);
 			playerSurnameLbl.setForeground(Color.WHITE);
 			playerSurnameLbl.setFont(new Font("Arial", Font.BOLD, 15));
 			playerSurnameLbl.setBackground(new Color(45, 45, 48));
-			playerSurnameLbl.setBounds(109, 105, 133, 20);
+			playerSurnameLbl.setBounds(109, 130, 155, 20);
 			contentPanel.add(playerSurnameLbl);
 			
 			playerSurname = new JTextField();
@@ -155,23 +154,23 @@ public class RegisterPlayer extends JFrame {
 			playerSurname.setForeground(new Color(255, 255, 255));
 			playerSurname.setBackground(new Color(62, 62, 66));
 			playerSurname.setColumns(10);
-			playerSurname.setBounds(319, 107, 149, 20);
+			playerSurname.setBounds(319, 132, 149, 20);
 			contentPanel.add(playerSurname);
 			
-			JButton playerCreate = new JButton("Create Player");
+			JButton playerCreate = new JButton("Create Coach");
 			playerCreate.setBackground(new Color(70, 70, 75));
 			playerCreate.setForeground(new Color(255, 255, 255));
 			playerCreate.setBounds(109, 275, 359, 38);
 			contentPanel.add(playerCreate);
 			windowButtons.add(playerCreate);
 			
-			JLabel playerNanlbl = new JLabel("Player NAN:");
+			JLabel playerNanlbl = new JLabel("Coach NAN:");
 			playerNanlbl.setVerticalAlignment(SwingConstants.CENTER);
 			playerNanlbl.setToolTipText("");
 			playerNanlbl.setForeground(Color.WHITE);
 			playerNanlbl.setFont(new Font("Arial", Font.BOLD, 15));
 			playerNanlbl.setBackground(new Color(45, 45, 48));
-			playerNanlbl.setBounds(109, 136, 133, 20);
+			playerNanlbl.setBounds(109, 161, 155, 20);
 			contentPanel.add(playerNanlbl);
 			
 			playerNan = new JTextField();
@@ -179,16 +178,16 @@ public class RegisterPlayer extends JFrame {
 			playerNan.setForeground(Color.WHITE);
 			playerNan.setColumns(10);
 			playerNan.setBackground(new Color(62, 62, 66));
-			playerNan.setBounds(319, 137, 149, 20);
+			playerNan.setBounds(319, 162, 149, 20);
 			contentPanel.add(playerNan);
 			
-			JLabel playerAgelbl = new JLabel("Player Age:");
+			JLabel playerAgelbl = new JLabel("Coach Age:");
 			playerAgelbl.setVerticalAlignment(SwingConstants.CENTER);
 			playerAgelbl.setToolTipText("");
 			playerAgelbl.setForeground(Color.WHITE);
 			playerAgelbl.setFont(new Font("Arial", Font.BOLD, 15));
 			playerAgelbl.setBackground(new Color(45, 45, 48));
-			playerAgelbl.setBounds(109, 166, 133, 20);
+			playerAgelbl.setBounds(109, 191, 155, 20);
 			contentPanel.add(playerAgelbl);
 			
 			playerAge = new JTextField();
@@ -196,40 +195,8 @@ public class RegisterPlayer extends JFrame {
 			playerAge.setForeground(Color.WHITE);
 			playerAge.setColumns(10);
 			playerAge.setBackground(new Color(62, 62, 66));
-			playerAge.setBounds(319, 168, 149, 20);
+			playerAge.setBounds(319, 193, 149, 20);
 			contentPanel.add(playerAge);
-			
-			JLabel playerNumberlbl = new JLabel("Player Number:");
-			playerNumberlbl.setVerticalAlignment(SwingConstants.CENTER);
-			playerNumberlbl.setToolTipText("");
-			playerNumberlbl.setForeground(Color.WHITE);
-			playerNumberlbl.setFont(new Font("Arial", Font.BOLD, 15));
-			playerNumberlbl.setBackground(new Color(45, 45, 48));
-			playerNumberlbl.setBounds(109, 196, 133, 20);
-			contentPanel.add(playerNumberlbl);
-			
-			playerNumber = new JTextField();
-			playerNumber.setToolTipText("");
-			playerNumber.setForeground(Color.WHITE);
-			playerNumber.setColumns(10);
-			playerNumber.setBackground(new Color(62, 62, 66));
-			playerNumber.setBounds(319, 198, 149, 20);
-			contentPanel.add(playerNumber);
-			
-			JLabel playerHeadlinelbl = new JLabel("Headline:");
-			playerHeadlinelbl.setVerticalAlignment(SwingConstants.CENTER);
-			playerHeadlinelbl.setToolTipText("");
-			playerHeadlinelbl.setForeground(Color.WHITE);
-			playerHeadlinelbl.setFont(new Font("Arial", Font.BOLD, 15));
-			playerHeadlinelbl.setBackground(new Color(45, 45, 48));
-			playerHeadlinelbl.setBounds(109, 226, 133, 20);
-			contentPanel.add(playerHeadlinelbl);
-			
-			JCheckBox playerHeadline = new JCheckBox("Headline");
-			playerHeadline.setForeground(new Color(255, 255, 255));
-			playerHeadline.setBackground(new Color(37, 37, 38));
-			playerHeadline.setBounds(319, 227, 149, 21);
-			contentPanel.add(playerHeadline);
 			
 			playerName.addKeyListener(new KeyAdapter() {
 	            @Override
@@ -288,20 +255,6 @@ public class RegisterPlayer extends JFrame {
 	            }
 	        });
 			
-			playerNumber.addKeyListener(new KeyAdapter() {
-	            @Override
-	            public void keyTyped(KeyEvent e) {
-	            	if (!WindowUtils.isNumberChar(e.getKeyChar())) {
-	            		e.setKeyChar((char) 0);
-	            	}
-	            	
-	            	if ((playerNumber.getText()+e.getKeyChar()).length() > 1) {
-	            		e.setKeyChar((char) 0);
-	            	}
-	            	super.keyTyped(e);
-	            }
-	        });
-			
 			playerCreate.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					
@@ -309,69 +262,49 @@ public class RegisterPlayer extends JFrame {
 					String[] pSurname = playerSurname.getText().split(",");
 					String pNan = playerNan.getText().replace(" ", "");
 					Integer pAge = Integer.parseInt(playerAge.getText().replace(" ", ""));
-					Integer pNumber = Integer.parseInt(playerNumber.getText().replace(" ", ""));
-					Boolean pHeadline = playerHeadline.isSelected();
 					
 					if (pName.length() < 3) {
-						NotifyUtils.error("The player name is invalid, please write at least 3.", "User Error!");
-	                    FileUtils.logToFile("The player name is invalid, please write at least 3.");
+						NotifyUtils.error("The coach name is invalid, please write at least 3.", "User Error!");
+	                    FileUtils.logToFile("The coach name is invalid, please write at least 3.");
 	                    return;
 					} else if (pSurname.length > 4) {
-						NotifyUtils.error("The player has too many surnames", "User Error!");
-	                    FileUtils.logToFile("User Error!, he player has too many surnames");
+						NotifyUtils.error("The coach has too many surnames", "User Error!");
+	                    FileUtils.logToFile("User Error!, he coach has too many surnames");
 	                    return;
 					} else if (pNan.length() < 9) {
-						NotifyUtils.error("The player has too many surnames", "User Error!");
-	                    FileUtils.logToFile("User Error!, The player has too many surnames");
+						NotifyUtils.error("The coach has too many surnames", "User Error!");
+	                    FileUtils.logToFile("User Error!, The coach has too many surnames");
 	                    return;
 					} else if (pAge > 100) {
-						NotifyUtils.error("The player is too old to play in this league.", "User Error!");
-	                    FileUtils.logToFile("User Error!, The player is too old to play in this league.");
-	                    return;
-					} else if (pNumber > 100) {
-						NotifyUtils.error("The player is too old to play in this league.", "User Error!");
-	                    FileUtils.logToFile("User Error!, The player is too old to play in this league.");
+						NotifyUtils.error("The coach is too old to play in this league.", "User Error!");
+	                    FileUtils.logToFile("User Error!, The coach is too old to play in this league.");
 	                    return;
 					}
 
 					Boolean already_exists = false;
-					for (player p : DataUtils.players) {
+					for (coach p : DataUtils.coaches) {
 						if (p.getNan().equals(pNan))
 							already_exists = true;
 					}
 					
 					if (already_exists) {
-						NotifyUtils.error("This player already exists, please check the name and the code again!", "User Error!");
-	                    FileUtils.logToFile("User Error!, This player already exists, please check the name and the code again!");
+						NotifyUtils.error("This coach already exists, please check the name and the code again!", "User Error!");
+	                    FileUtils.logToFile("User Error!, This coach already exists, please check the name and the code again!");
 	                    return;
-					}
+					}	
 					
-					Boolean code_exists = false;
-					for (team t : DataUtils.teams) {
-						for (player p : t.getPlayers())
-							if (p.getTeam_number() == pNumber)
-								code_exists = true;
-					}
+					coach newCoach = new coach(pName, pSurname, pNan, pAge);
 					
-					if (code_exists) {
-						NotifyUtils.error("This player team number: '" + pNumber +"' belongs to another player. please use another number.", "User Error!");
-	                    FileUtils.logToFile("User Error!, This player team number: '" + pNumber +"' belongs to another player. please use another number.");
-	                    return;
-					}
-					
-					
-					player newPlayer = new player(pName, pSurname, pNan, pAge, pNumber, pHeadline);
-					
-					DataUtils.players.add(newPlayer);
+					DataUtils.coaches.add(newCoach);
 					
 					for (team t : DataUtils.teams) {
 						if (t.getName().equals(tName)) 
-							t.addPlayer(newPlayer);
+							t.setCoach(newCoach);
 					}
 					
-					MainForm.onTeamsChanged(); // Trigger player update event
+					MainForm.onTeamsChanged(); // Trigger coach update event
 
-			        FileUtils.logToFile("Added new player to team "+ tName + " with name: " + pName + ", " + Arrays.toString(pSurname));
+			        FileUtils.logToFile("Added new coach to team "+ tName + " with name: " + pName + ", " + Arrays.toString(pSurname));
 					NotifyUtils.succeed("Successfully added "+ pName + " to " + tName, null);
 
 				}

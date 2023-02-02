@@ -21,6 +21,13 @@ public class player extends person implements Serializable {
         this.points = points;
         this.headline = headline;
     }
+    
+    public player(String name, String[] surnames, String nan, Integer age, Integer team_number, Boolean headline) {
+        super(name, surnames, nan, age);
+        this.team_number = team_number;
+        this.points = 0.;
+        this.headline = headline;
+    }
 
     public player(String name, String[] surnames, String nan, Integer age, Integer team_number, Double points, Boolean headline) {
         super(name, surnames, nan, age);

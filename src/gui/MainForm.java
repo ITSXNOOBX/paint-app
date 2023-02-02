@@ -23,6 +23,7 @@ import java.awt.geom.Area;
 import java.awt.geom.RoundRectangle2D;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.awt.Font;
 import javax.swing.JButton;
 import javax.swing.DefaultListModel;
@@ -43,6 +44,7 @@ import javax.swing.JSeparator;
 import javax.swing.JList;
 import javax.swing.event.ListSelectionListener;
 
+import person.coach;
 import person.player;
 import teams.team;
 
@@ -80,6 +82,11 @@ public class MainForm extends JFrame {
 	static JComboBox<Object> setupSelectTeam;
 	static JComboBox<Object> setupSelectPlayer;
 	static JLabel setupSelectCoach;
+	static JButton setupDeleteTeam;
+	static JButton setupCreatePlayer;
+	static JButton setupDeletePlayer;
+	static JButton setupCreateCoach;
+	static JButton setupDeleteCoach;
 	
 	/**
 	 * Launch the application.
@@ -456,18 +463,17 @@ public class MainForm extends JFrame {
 				
 				setupSelectPlayer.removeAllItems();
 				setupSelectPlayer.setEnabled(hasPlayer);
+				setupDeletePlayer.setEnabled(hasPlayer);
 				if (selected != null && hasPlayer) {
 //					setupSelectPlayer.addAll(selected.getPlayers());
 					for (Object p : selected.getPlayers()) {
-						
 						setupSelectPlayer.addItem(p);
 					}
-				} else {
-					setupSelectPlayer.addItem("No Players.");
-					
+					setupCreatePlayer.setEnabled(selected.getPlayers().size() < 9);
 				}
 				
 				setupSelectCoach.setEnabled(hasCoach);
+				setupDeleteCoach.setEnabled(hasCoach);
 				if (selected != null && hasCoach) {
 					setupSelectCoach.setText(selected.getCoach().getName());
 				} else {
@@ -499,6 +505,7 @@ public class MainForm extends JFrame {
 		setupCreateTeam.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				RegisterTeam.main(null);
+				homeDisplayData(true);
 				onTeamsChanged();
 			}
 		});
@@ -511,7 +518,7 @@ public class MainForm extends JFrame {
 		setupCreateTeamlbl.setBounds(20, 90, 174, 24);
 		setupLeagueWindow.add(setupCreateTeamlbl);
 		
-		setupSelectPlayer = new JComboBox();
+		setupSelectPlayer = new JComboBox<Object>();
 		setupSelectPlayer.setBounds(295, 189, 265, 24);
 		setupLeagueWindow.add(setupSelectPlayer);
 		
@@ -521,7 +528,7 @@ public class MainForm extends JFrame {
 		setupSelectPlayerLbl.setBounds(20, 189, 174, 24);
 		setupLeagueWindow.add(setupSelectPlayerLbl);
 		
-		JButton setupDeleteTeam = new JButton("Delete");
+		setupDeleteTeam = new JButton("Delete");
 		setupDeleteTeam.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				team selected = (team) setupSelectTeam.getSelectedItem();
@@ -530,11 +537,12 @@ public class MainForm extends JFrame {
 				for (int i = 0; i < DataUtils.teams.size(); i++) {
 					team iteam = DataUtils.teams.get(i);
 					if (selected.equals(iteam)) {
-						FileUtils.logToFile("Deleted team '" + iteam.getName() + "' with code '" + iteam.getCode() + "'");
 						DataUtils.teams.remove(i);
+						FileUtils.logToFile("Deleted team '" + iteam.getName() + "' with code '" + iteam.getCode() + "'");
 					}
 				}
 				
+				homeDisplayData(true);
 				onTeamsChanged();
 			}
 		});
@@ -553,7 +561,20 @@ public class MainForm extends JFrame {
 		setupCreatePlayerLbl.setBounds(20, 226, 174, 24);
 		setupLeagueWindow.add(setupCreatePlayerLbl);
 		
-		JButton setupCreatePlayer = new JButton("Create");
+		setupCreatePlayer = new JButton("Create");
+		setupCreatePlayer.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				team selectedT = (team) setupSelectTeam.getSelectedItem();
+				if (selectedT == null) return;
+
+//				player selectedP = (player) setupSelectPlayer.getSelectedItem();
+//				if (selectedP == null) return;
+				
+				RegisterPlayer.main(new String[] {selectedT.getName()});
+				homeDisplayData(false);
+				onTeamsChanged();
+			}
+		});
 		setupCreatePlayer.setBounds(295, 226, 265, 24);
 		setupLeagueWindow.add(setupCreatePlayer);
 		
@@ -563,7 +584,35 @@ public class MainForm extends JFrame {
 		setupDeletePlayerLbl.setBounds(20, 262, 174, 24);
 		setupLeagueWindow.add(setupDeletePlayerLbl);
 		
-		JButton setupDeletePlayer = new JButton("Delete");
+		setupDeletePlayer = new JButton("Delete");
+		setupDeletePlayer.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				team selectedT = (team) setupSelectTeam.getSelectedItem();
+				if (selectedT == null) return;
+//				
+				player selectedP = (player) setupSelectPlayer.getSelectedItem();
+				if (selectedP == null) return;
+					
+				for (int i = 0; i < DataUtils.players.size(); i++) {
+					player iplayer = DataUtils.players.get(i);
+					if (selectedP.equals(iplayer)) {
+						FileUtils.logToFile("Deleted player " + iplayer.getName() + ", " +  Arrays.toString(iplayer.getSurnames()));
+						DataUtils.teams.remove(i);
+					}
+				}
+				
+				for (int i = 0; i < selectedT.getPlayers().size(); i++) {
+					player iplayer = selectedT.getPlayers().get(i);
+					if (selectedP.equals(iplayer)) {
+						FileUtils.logToFile("Deleted from team " + selectedT.getName() + " player "+ iplayer.getName() + ", " +  Arrays.toString(iplayer.getSurnames()));
+						selectedT.removePlayerIndex(i);
+					}
+				}
+				
+				homeDisplayData(false);
+				onTeamsChanged();
+			}
+		});
 		setupDeletePlayer.setBounds(295, 262, 265, 24);
 		setupLeagueWindow.add(setupDeletePlayer);
 		
@@ -573,7 +622,17 @@ public class MainForm extends JFrame {
 		setupCreateCoachlbl.setBounds(20, 362, 174, 24);
 		setupLeagueWindow.add(setupCreateCoachlbl);
 		
-		JButton setupCreateCoach = new JButton("Create");
+		setupCreateCoach = new JButton("Create");
+		setupCreateCoach.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				team selectedT = (team) setupSelectTeam.getSelectedItem();
+				if (selectedT == null) return;
+				
+				RegisterCoach.main(new String[] {selectedT.getName()});
+				homeDisplayData(false);
+				onTeamsChanged();
+			}
+		});
 		setupCreateCoach.setBounds(295, 362, 265, 24);
 		setupLeagueWindow.add(setupCreateCoach);
 		
@@ -583,7 +642,29 @@ public class MainForm extends JFrame {
 		setupDeleteCoachlbl.setBounds(20, 398, 174, 24);
 		setupLeagueWindow.add(setupDeleteCoachlbl);
 		
-		JButton setupDeleteCoach = new JButton("Delete");
+		setupDeleteCoach = new JButton("Delete");
+		setupDeleteCoach.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				team selectedT = (team) setupSelectTeam.getSelectedItem();
+				if (selectedT == null) return;
+					
+				String coachName = setupSelectCoach.getText();
+				
+				for (int i = 0; i < DataUtils.coaches.size(); i++) {
+					coach icoach = DataUtils.coaches.get(i);
+					if (coachName.equals(icoach)) {
+						FileUtils.logToFile("Deleted coach " + icoach.getName() + ", " +  Arrays.toString(icoach.getSurnames()));
+						DataUtils.teams.remove(i);
+					}
+				}
+				
+				selectedT.setCoach(null);
+				FileUtils.logToFile("Deleted from team " + selectedT.getName() + " player "+ coachName);
+				
+				homeDisplayData(false);
+				onTeamsChanged();
+			}
+		});
 		setupDeleteCoach.setBounds(295, 398, 265, 24);
 		setupLeagueWindow.add(setupDeleteCoach);
 		
@@ -718,12 +799,25 @@ public class MainForm extends JFrame {
 	}
 	
 	public static void onTeamsChanged() {
-		if (frame == null) return;
+//		if (frame == null) return;
+		Integer index = setupSelectTeam.getSelectedIndex();
 		homeTeamData.clear(); homeTeamData.addAll(DataUtils.teams);
 		
-		int htdSize = homeTeamData.size();
-		setupSelectTeam.setEnabled(htdSize > 0);
+		Boolean htdEnabled = homeTeamData.size() > 0;
+		setupSelectTeam.setEnabled(htdEnabled);
+		setupDeleteTeam.setEnabled(htdEnabled);
+		setupSelectPlayer.setEnabled(htdEnabled);
+		setupCreatePlayer.setEnabled(htdEnabled);
+		setupDeletePlayer.setEnabled(htdEnabled);
+		setupSelectCoach.setEnabled(htdEnabled);
+		setupCreateCoach.setEnabled(htdEnabled);
+		setupDeleteCoach.setEnabled(htdEnabled);
+		
 		WindowUtils.dlmToComboBoxAdd(homeTeamData, setupSelectTeam);	
+		
+		if (index != -1 && homeTeamData.size() > index) {
+			setupSelectTeam.setSelectedIndex(1);
+		}
 	}
 	
 	private void homeDisplayData(Boolean teamUpdated) {
