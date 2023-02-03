@@ -32,6 +32,8 @@ import utils.DataUtils;
 import utils.FileUtils;
 import utils.NotifyUtils;
 import utils.WindowUtils;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeEvent;
 
 public class RegisterCoach extends JFrame {
 	static RegisterCoach frame;
@@ -199,59 +201,68 @@ public class RegisterCoach extends JFrame {
 			contentPanel.add(playerAge);
 			
 			playerName.addKeyListener(new KeyAdapter() {
-	            @Override
-	            public void keyTyped(KeyEvent e) {
-	                playerName.setText(playerName.getText().replace(" ", ""));
+				@Override
+				public void keyReleased(KeyEvent e) {
+	                String text = playerName.getText();
+	                playerName.setText(text.replace(" ", ""));
 	                
-	            	if ((playerName.getText()+e.getKeyChar()).length() > 15) {
-	            		e.setKeyChar((char) 0);
+	            	if (text.length() > 15) {
+	            		playerName.setText(text.substring(0, 15));
 	            	}
-	            	
-	                super.keyTyped(e);
-	            }
+				}
 	        });
 			
 			playerSurname.addKeyListener(new KeyAdapter() {
 	            @Override
-	            public void keyTyped(KeyEvent e) {
-	                playerSurname.setText(playerSurname.getText().replace(" ", ""));
-	            	if ((playerSurname.getText()+e.getKeyChar()).length() > 40) {
-	            		e.setKeyChar((char) 0);
+	            public void keyReleased(KeyEvent e) {
+	            	String text = playerSurname.getText();
+	            	
+	            	if (text.length() > 40) {
+//	            		e.setKeyChar((char) 0);
+	            		playerSurname.setText(text.substring(0, 40));
 	            	}
-	                super.keyTyped(e);
 	            }
 	        });
 			
 			playerNan.addKeyListener(new KeyAdapter() {
 	            @Override
-	            public void keyTyped(KeyEvent e) {
-	            	playerNan.setText(playerNan.getText().replace(" ", ""));
+	            public void keyReleased(KeyEvent e) {
+	            	String text = playerNan.getText();
+	            	playerNan.setText(text.replace(" ", ""));
 	                
-	            	if ((playerNan.getText()+e.getKeyChar()).length() <= 8) {
-	            		if (!WindowUtils.isNumberChar(e.getKeyChar()))
-	            			e.setKeyChar((char) 0);
-	            	} else if ((playerNan.getText()+e.getKeyChar()).length() == 9) {
-	            		if (WindowUtils.isNumberChar(e.getKeyChar()))
-	            			e.setKeyChar((char) 0);
-	            	} else if((playerNan.getText()+e.getKeyChar()).length() > 9) {
-		    			e.setKeyChar((char) 0);
+	            	if (text.length() == 0) return;
+	            	            	
+	            	if (text.length() <= 8) {
+	            		if (!WindowUtils.isNumberChar(text.charAt(text.length() - 1)))
+//	            			e.setKeyChar((char) 0);
+	            			playerNan.setText(text.substring(0, text.length()-1));
+	            	} else if (text.length() == 9) {
+	            		if (WindowUtils.isNumberChar(text.charAt(text.length() - 1)))
+//	            			e.setKeyChar((char) 0);
+	            			playerNan.setText(text.substring(0, text.length()-1));
+	            	} else if(text.length() > 9) {
+//		    			e.setKeyChar((char) 0);
+	            		playerNan.setText(text.substring(0, 9));
 					}
-	            	
-	                super.keyTyped(e);
 	            }
 	        });
 			
 			playerAge.addKeyListener(new KeyAdapter() {
 	            @Override
-	            public void keyTyped(KeyEvent e) {
-	            	if (!WindowUtils.isNumberChar(e.getKeyChar())) {
-	            		e.setKeyChar((char) 0);
+	            public void keyReleased(KeyEvent e) {
+	            	String text = playerAge.getText();
+
+	            	if (text.length() == 0) return;
+	            	
+	            	if (!WindowUtils.isNumberChar(text.charAt(text.length() - 1))) {
+//	            		e.setKeyChar((char) 0);
+	            		playerAge.setText(text.substring(0, text.length()-1));
 	            	}
 	            	
-	            	if ((playerAge.getText()+e.getKeyChar()).length() > 3) {
-	            		e.setKeyChar((char) 0);
+	            	if (text.length() > 3) {
+//	            		e.setKeyChar((char) 0);
+	            		playerAge.setText(text.substring(0, text.length()-1));
 	            	}
-	            	super.keyTyped(e);
 	            }
 	        });
 			

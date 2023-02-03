@@ -14,6 +14,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 @SuppressWarnings("serial")
 public class WindowUtils extends JFrame  {
@@ -30,6 +31,13 @@ public class WindowUtils extends JFrame  {
     public static Boolean isNumberChar(char key) {   
     	for (char n : number) if (n == key) return true;
     	return false;
+    }
+    
+    public static void clearTextFields(JTextField... values) {
+        for (JTextField t : values) {
+//            c.setVisible(visible);
+        	t.setText(null);
+        }
     }
     
 	public static void handleMouseDrag(JFrame frame, Boolean enable) {

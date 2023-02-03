@@ -14,14 +14,14 @@ public class FileUtils {
 
     String formattedDate = new SimpleDateFormat("HH:mm:ss").format(new Date());
     public static final String appdata = System.getenv("APPDATA");
-    public static final String root = appdata + "/paint-app";
-    public static final String logs_root = root + "/logs";
-    public static final String cache_root = root + "/cache";
+    public static final String root = appdata + "/paint-app/";
+    public static final String logs_root = root + "logs/";
+    public static final String cache_root = root + "cache/";
     
-    public static final String path_log = logs_root + "/"+ new SimpleDateFormat("dd-MM-yyyy_HH-mm-ss").format(new Date()) + "_paint-app.log";
-    public static final String path_teams = root + "/teams_data.bin";
-    public static final String path_players = root + "/players_data.bin";
-    public static final String path_coach = root + "/coach_data.bin";
+    public static final String path_log = logs_root + new SimpleDateFormat("dd-MM-yyyy_HH-mm-ss").format(new Date()) + "_paint-app.log";
+    public static final String path_teams = root + "teams_data.bin";
+    public static final String path_players = root + "players_data.bin";
+    public static final String path_coach = root + "coach_data.bin";
 
 
     public static boolean logToFile(String text, Boolean... supressConsole) {   

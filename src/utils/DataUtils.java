@@ -32,9 +32,9 @@ public class DataUtils {
 	
 	public static Boolean write() {
 		Boolean status = true;
-		if (!FileUtils.writeObjectToFile(players)) status = false;
-		if (!FileUtils.writeObjectToFile(coaches)) status = false;
-		if (!FileUtils.writeObjectToFile(teams)) status = false;
+		if (players.size() != 0 && !FileUtils.writeObjectToFile(players)) status = false;
+		if (coaches.size() != 0 && !FileUtils.writeObjectToFile(coaches)) status = false;
+		if (teams.size() != 0 && !FileUtils.writeObjectToFile(teams)) status = false;
 
 		return status;
 	}
