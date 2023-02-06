@@ -19,7 +19,7 @@ import javax.swing.JTextField;
 @SuppressWarnings("serial")
 public class WindowUtils extends JFrame  {
     private static int mouseX, mouseY;
-    private static char[] number = {'1', '2', '3', '4', '5', '6', '7', '8', '9' };
+    private static char[] number = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9' };
 	
     public static void dlmToComboBoxAdd(DefaultListModel<?> dlm, JComboBox<Object> combo) {   
     	combo.removeAllItems(); // Easyer to clean and set again :D

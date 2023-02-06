@@ -71,7 +71,7 @@ public class Main {
             	
             	FileUtils.logToFile("Program is closing, running pre closing actions");
             	SingleInstanceUtils.unlockFile();
-            	if(isrunning) return;
+            	if(isrunning || MainForm.should_not_save) return;
             	
                 if (DataUtils.write()) {
                	 	FileUtils.logToFile("Successfully saved all data in this session.");

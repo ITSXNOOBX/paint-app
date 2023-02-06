@@ -58,6 +58,10 @@ public class player extends person implements Serializable {
     public void setPoints(Double points) {
         this.points = points;
     }
+    
+    public void addPoints(Double points) {
+        this.points += points;
+    }
 
     public Boolean getHeadline() {
         return headline;

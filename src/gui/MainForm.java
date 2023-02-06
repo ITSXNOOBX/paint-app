@@ -45,8 +45,10 @@ import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JSeparator;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.event.ListSelectionListener;
 
+import matches.score;
 import person.coach;
 import person.player;
 import teams.team;
@@ -59,9 +61,12 @@ import java.beans.PropertyChangeEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import javax.swing.ListSelectionModel;
+import java.awt.event.ContainerAdapter;
+import java.awt.event.ContainerEvent;
 
 public class MainForm extends JFrame {
 
+	public static Boolean should_not_save = false;
 	Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 	static MainForm frame;
 	private ArrayList<JButton> windowButtons = new ArrayList<JButton>();
@@ -95,8 +100,8 @@ public class MainForm extends JFrame {
 	static JButton setupDeletePlayer;
 	static JButton setupCreateCoach;
 	static JButton setupDeleteCoach;
-	private JTextField leagueLocalPlayerPoints;
-	private JTextField leagueOutsiderPlayerPoints;
+	static JTextField leagueLocalPlayerPoints;
+	static JTextField leagueOutsiderPlayerPoints;
 
 	static JComboBox<Object> leagueLocalTeamList;
 	static JComboBox<Object> leagueOutsiderTeamList;
@@ -104,8 +109,15 @@ public class MainForm extends JFrame {
 	static JTabbedPane tabbedPane;
 	static DefaultListModel<player> leagueLocalPlayerListData = new DefaultListModel<player>();
 	static DefaultListModel<player> leagueOutsiderPlayerListData = new DefaultListModel<player>();
-	static DefaultListModel<String> leagueMatchLogData = new DefaultListModel<String>();
-
+	static DefaultListModel<score> leagueMatchLogData = new DefaultListModel<score>();
+	
+	static JButton leagueLocalSetPlayerPoints;
+	static JButton leagueOutsiderSetPlayerPoints;
+	static JList leagueOutsiderPlayerList;
+	static JList leagueLocalPlayerList;
+	static JButton leagueSaveMatch;
+	static JButton leagueCancelMatch;
+	
 	/**
 	 * Launch the application.
 	 */
@@ -455,7 +467,7 @@ public class MainForm extends JFrame {
 		tabbedPane.setBackgroundAt(0, new Color(0, 122, 204));
 		matchesSubPanel.setLayout(null);
 
-		JLabel leagueLocalTeamlbl = new JLabel("Outsider Team");
+		JLabel leagueLocalTeamlbl = new JLabel("Local Team | L");
 		leagueLocalTeamlbl.setForeground(Color.WHITE);
 		leagueLocalTeamlbl.setFont(new Font("Arial", Font.BOLD, 15));
 		leagueLocalTeamlbl.setBounds(10, 10, 180, 13);
@@ -466,7 +478,7 @@ public class MainForm extends JFrame {
 		legueLocalTeamSeparator.setBounds(10, 27, 180, 1);
 		matchesSubPanel.add(legueLocalTeamSeparator);
 
-		JLabel leagueOutsiderTeamlbl = new JLabel("Outsider Team");
+		JLabel leagueOutsiderTeamlbl = new JLabel("Outsider Team | O");
 		leagueOutsiderTeamlbl.setForeground(Color.WHITE);
 		leagueOutsiderTeamlbl.setFont(new Font("Arial", Font.BOLD, 15));
 		leagueOutsiderTeamlbl.setBounds(390, 10, 174, 13);
@@ -490,11 +502,13 @@ public class MainForm extends JFrame {
 
 				if (selectedLocalT.equals(selectedOutT)) {
 					leagueLocalTeamList.setSelectedIndex(-1);
+					onMatchChanged();
 					NotifyUtils.warn("Teams cannot be the same, please choose another team.", "User Error!");
 					FileUtils.logToFile("User Error, Teams cannot be the same, please choose another team.");
 					return;
 				}
 				leagueLocalPlayerListData.addAll(selectedLocalT.getPlayers());
+				onMatchChanged();
 			}
 		});
 		leagueLocalTeamList.setBounds(10, 45, 180, 21);
@@ -507,22 +521,24 @@ public class MainForm extends JFrame {
 		leagueLocalTeamSelectedPlayer.setBounds(10, 328, 180, 15);
 		matchesSubPanel.add(leagueLocalTeamSelectedPlayer);
 		
-		JList leagueLocalPlayerList = new JList();
+		leagueLocalPlayerList = new JList();
 		leagueLocalPlayerList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		leagueLocalPlayerList.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				if (homeTeamData.size() == 0) return;
 				team selectedLocalT = (team) leagueLocalTeamList.getSelectedItem();
 				player selectedLocalP = (player) leagueLocalPlayerList.getSelectedValue();
 				
 				if (selectedLocalT == null || selectedLocalP == null) {
-					leagueLocalTeamSelectedPlayer.setText("");
-					leagueLocalPlayerPoints.setText("0-10");
+					leagueLocalTeamSelectedPlayer.setText("Select Player");
+					leagueLocalPlayerPoints.setText("0");
 					return;
 				};
 				
 				leagueLocalTeamSelectedPlayer.setText(selectedLocalP.getName());
-				leagueLocalPlayerPoints.setText(selectedLocalP.getPoints() + "");				
+				// leagueLocalPlayerPoints.setText(selectedLocalP.getPoints() + "");
+				leagueLocalPlayerPoints.setText("0");	
 			}
 		});
 		leagueLocalPlayerList.setBounds(10, 75, 180, 242);
@@ -546,41 +562,47 @@ public class MainForm extends JFrame {
 			@Override
 			public void keyReleased(KeyEvent e) {
             	String text = leagueLocalPlayerPoints.getText();
+            	if (text.length() == 0) return;
+            	char character = text.charAt(text.length() - 1);
             	leagueLocalPlayerPoints.setText(text.replace(" ", ""));
                 
             	if (text.length() == 0) return;
             	
-            	
-        		if(text.length() > 1) leagueLocalPlayerPoints.setText(text.substring(0, 1));
+        		if(text.length() > 3) leagueLocalPlayerPoints.setText(text.substring(0, 3));
         		text = leagueLocalPlayerPoints.getText();
-        		if (!WindowUtils.isNumberChar(text.charAt(text.length() - 1)))
+        		if (!WindowUtils.isNumberChar(character) && character != '.')
         			leagueLocalPlayerPoints.setText(text.substring(0, text.length()-1));
 
 			}
 		});
 		leagueLocalPlayerPoints.setFont(new Font("Tahoma", Font.BOLD, 9));
 		leagueLocalPlayerPoints.setHorizontalAlignment(SwingConstants.CENTER);
-		leagueLocalPlayerPoints.setText("0-10");
+		leagueLocalPlayerPoints.setText("0");
 		leagueLocalPlayerPoints.setBounds(125, 348, 65, 15);
 		matchesSubPanel.add(leagueLocalPlayerPoints);
 		leagueLocalPlayerPoints.setColumns(1);
 
-		JButton leagueLocalSetPlayerPoints = new JButton("Save Points");
+		leagueLocalSetPlayerPoints = new JButton("Save Points");
 		leagueLocalSetPlayerPoints.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+//				if (leagueLocalTeamList.getSelectedIndex() != -1 && leagueOutsiderTeamList.getSelectedIndex() != -1) return;
+				
 				String pointsStr = leagueLocalPlayerPoints.getText();
 				team selectedLocalT = (team) leagueLocalTeamList.getSelectedItem();
 				player selectedLocalP = (player) leagueLocalPlayerList.getSelectedValue();
 				
-				Double points = pointsStr.isEmpty() ? 0. : Double.parseDouble(pointsStr);
+				Double points = pointsStr.isEmpty() || !pointsStr.matches("[0-9]{1,13}(\\.[0-9]*)?") ? null : Double.parseDouble(pointsStr);
 			
 				if (selectedLocalT == null || selectedLocalP == null || points == null) {
 					NotifyUtils.error("Invalid team/player selected or invalid points.", "User error");
 					return;
 				}
 				
-				selectedLocalP.setPoints(selectedLocalP.getPoints() + points);
-				leagueMatchLogData.addElement("L | "+ selectedLocalP.getName() + " scored: " + points +"points");
+				
+//				selectedLocalP.setPoints(selectedLocalP.getPoints() + points);
+//				leagueMatchLogData.addElement("L | "+ selectedLocalP.getName() + " scored: " + points +" points");
+				leagueMatchLogData.addElement(new score(selectedLocalP, points, true));
+				onMatchChanged();
 			}
 		});
 		leagueLocalSetPlayerPoints.setBounds(10, 375, 180, 38);
@@ -599,12 +621,14 @@ public class MainForm extends JFrame {
 
 				if (selectedOutT.equals(selectedLocalT)) {
 					leagueOutsiderTeamList.setSelectedIndex(-1);
+					onMatchChanged();
 					NotifyUtils.warn("Teams cannot be the same, please choose another team.", "User Error!");
 					FileUtils.logToFile("User Error, Teams cannot be the same, please choose another team.");
 					return;
 				}
 
 				leagueOutsiderPlayerListData.addAll(selectedOutT.getPlayers());
+				onMatchChanged();
 			}
 		});
 
@@ -618,21 +642,23 @@ public class MainForm extends JFrame {
 		leagueOutsiderTeamSelectedPlayer.setBounds(384, 328, 180, 15);
 		matchesSubPanel.add(leagueOutsiderTeamSelectedPlayer);
 
-		JList leagueOutsiderPlayerList = new JList();
+		leagueOutsiderPlayerList = new JList();
 		leagueOutsiderPlayerList.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				if (homeTeamData.size() == 0) return;
 				team selectedOutsiderT = (team) leagueOutsiderTeamList.getSelectedItem();
 				player selectedOutsiderP = (player) leagueOutsiderPlayerList.getSelectedValue();
 				
 				if (selectedOutsiderT == null || selectedOutsiderP == null) {
 					leagueOutsiderTeamSelectedPlayer.setText("");
-					leagueLocalPlayerPoints.setText("0-10");
+					leagueOutsiderPlayerPoints.setText("0");
 					return;
 				};
 				
 				leagueOutsiderTeamSelectedPlayer.setText(selectedOutsiderP.getName());
-				leagueOutsiderPlayerPoints.setText(selectedOutsiderP.getPoints() + "");				
+//				leagueOutsiderPlayerPoints.setText(selectedOutsiderP.getPoints() + "");	
+				leagueOutsiderPlayerPoints.setText("0");	
 			}
 		});
 		leagueOutsiderPlayerList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -657,39 +683,45 @@ public class MainForm extends JFrame {
 			@Override
 			public void keyReleased(KeyEvent e) {
             	String text = leagueOutsiderPlayerPoints.getText();
+            	if (text.length() == 0) return;
+            	char character = text.charAt(text.length() - 1);
             	leagueOutsiderPlayerPoints.setText(text.replace(" ", ""));
                 
             	if (text.length() == 0) return;
             	            	
-        		if(text.length() > 1) leagueOutsiderPlayerPoints.setText(text.substring(0, 1));
+        		if(text.length() > 3) leagueOutsiderPlayerPoints.setText(text.substring(0, 3));
         		text = leagueOutsiderPlayerPoints.getText();
-        		if (!WindowUtils.isNumberChar(text.charAt(text.length() - 1)))
+        		if (!WindowUtils.isNumberChar(character) && character != '.')
         			leagueOutsiderPlayerPoints.setText(text.substring(0, text.length()-1));
 			}
 		});
 		leagueOutsiderPlayerPoints.setFont(new Font("Tahoma", Font.BOLD, 9));
-		leagueOutsiderPlayerPoints.setText("0-10");
+		leagueOutsiderPlayerPoints.setText("0");
 		leagueOutsiderPlayerPoints.setHorizontalAlignment(SwingConstants.CENTER);
 		leagueOutsiderPlayerPoints.setColumns(1);
 		leagueOutsiderPlayerPoints.setBounds(499, 348, 65, 15);
 		matchesSubPanel.add(leagueOutsiderPlayerPoints);
 
-		JButton leagueOutsiderSetPlayerPoints = new JButton("Save Points");
+		leagueOutsiderSetPlayerPoints = new JButton("Save Points");
 		leagueOutsiderSetPlayerPoints.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+//				if (leagueLocalTeamList.getSelectedIndex() != -1 && leagueOutsiderTeamList.getSelectedIndex() != -1) return;
+
 				String pointsStr = leagueOutsiderPlayerPoints.getText();
 				team selectedOutsiderT = (team) leagueOutsiderTeamList.getSelectedItem();
 				player selectedOutsiderP = (player) leagueOutsiderPlayerList.getSelectedValue();
 				
-				Double points = pointsStr.isEmpty() ? 0. : Double.parseDouble(pointsStr);
+				Double points = pointsStr.isEmpty() || !pointsStr.matches("[0-9]{1,13}(\\.[0-9]*)?") ? null : Double.parseDouble(pointsStr);
 			
 				if (selectedOutsiderT == null || selectedOutsiderP == null || points == null) {
 					NotifyUtils.error("Invalid team/player selected or invalid points.", "User error");
 					return;
 				}
 				
-				selectedOutsiderP.setPoints(selectedOutsiderP.getPoints() + points);
-				leagueMatchLogData.addElement("O | "+ selectedOutsiderP.getName() + " scored: " + points + "points");
+//				selectedOutsiderP.setPoints(selectedOutsiderP.getPoints() + points);
+//				leagueMatchLogData.addElement("O | "+ selectedOutsiderP.getName() + " scored: " + points + "points");
+				leagueMatchLogData.addElement(new score(selectedOutsiderP, points, false));
+				onMatchChanged();
 			}
 		});
 		leagueOutsiderSetPlayerPoints.setBounds(384, 375, 180, 38);
@@ -722,10 +754,77 @@ public class MainForm extends JFrame {
 
 		JList leagueMatchLog = new JList();
 		leagueMatchLog.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		leagueMatchLog.setBounds(200, 90, 175, 323);
+		leagueMatchLog.setBounds(200, 90, 175, 273);
 		matchesSubPanel.add(leagueMatchLog);
 		leagueMatchLog.setModel(leagueMatchLogData);
-
+		
+		leagueCancelMatch = new JButton("");
+		leagueCancelMatch.setEnabled(false);
+		leagueCancelMatch.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Integer option = JOptionPane.showConfirmDialog(null, "Are your sure you want to cancel this match? The scores will be lost!"); // 0 = yes, 1 = no, 2 = cancel
+				FileUtils.logToFile("Match cancel option has been triggered, user has " + (option == 0 ? "allowed" : option == 1 ? "denied" : "canceled") + " the operation.");
+				if (option != 0) return;
+				
+				leagueLocalTeamList.setSelectedIndex(-1);
+				leagueOutsiderTeamList.setSelectedIndex(-1);
+				
+				leagueLocalTeamSelectedPlayer.setText("Select Player");
+				leagueLocalPlayerPoints.setText("0");
+				leagueLocalPlayerListData.clear();
+				
+				leagueOutsiderTeamSelectedPlayer.setText("Select Player");
+				leagueOutsiderPlayerPoints.setText("0");
+				leagueOutsiderPlayerListData.clear();
+				
+				leagueMatchLogData.clear();
+				
+				onMatchChanged();
+				NotifyUtils.succeed("Match has been canecelled!", null);
+				FileUtils.logToFile("User has deleted match, match has been canceled!");
+			}
+		});
+		leagueCancelMatch.setToolTipText("Cancel Match");
+		leagueCancelMatch.setIcon(new ImageIcon(MainForm.class.getResource("/assets/icons8-close-48.png")));
+		leagueCancelMatch.setBounds(200, 375, 85, 38);
+		matchesSubPanel.add(leagueCancelMatch);
+		windowButtons.add(leagueCancelMatch);
+		
+		leagueSaveMatch = new JButton("");
+		leagueSaveMatch.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				team localTeam = (team) leagueLocalTeamList.getSelectedItem();
+				team outsiderTeam = (team) leagueOutsiderTeamList.getSelectedItem();
+				
+				Double localPoints = 0.;
+				Double outsiderPoints = 0.;
+				
+				for (int i=0; i< leagueMatchLogData.size(); i++) {
+					score player_score = leagueMatchLogData.get(i);
+					player ply = player_score.getScorer();
+					if (player_score.isLocal())
+						localPoints += player_score.getPoints();
+					else
+						outsiderPoints += player_score.getPoints();
+					
+					ply.addPoints(player_score.getPoints());
+				}
+				
+				
+				localTeam.addPoints(localPoints);
+				outsiderTeam.addPoints(outsiderPoints);
+				
+				NotifyUtils.succeed("Successfully created match, " + (localPoints > outsiderPoints ? localTeam.getName() : outsiderTeam.getName()) + " won the match!", null);
+			}
+		});
+		leagueSaveMatch.setToolTipText("Save Match");
+		leagueSaveMatch.setEnabled(false);
+		leagueSaveMatch.setIcon(new ImageIcon(MainForm.class.getResource("/assets/icons8-done-48.png")));
+		leagueSaveMatch.setBounds(290, 375, 85, 38);
+		matchesSubPanel.add(leagueSaveMatch);
+		windowButtons.add(leagueSaveMatch);
+		
 		leagueClassification = new JPanel();
 		leagueClassification.setBackground(new Color(45, 45, 48));
 		tabbedPane.addTab("Classification", null, leagueClassification, null);
@@ -1032,7 +1131,7 @@ public class MainForm extends JFrame {
 
 		settingsPanelWindow = new JPanel();
 		settingsPanelWindow.setBackground(new Color(45, 45, 48));
-		layeredPane.setLayer(settingsPanelWindow, 4);
+		layeredPane.setLayer(settingsPanelWindow, 5);
 		settingsPanelWindow.setBounds(0, 0, 580, 450);
 		layeredPane.add(settingsPanelWindow);
 		settingsPanelWindow.setLayout(null);
@@ -1161,11 +1260,41 @@ public class MainForm extends JFrame {
 		});
 		settingsAppFolder.setBounds(465, 94, 105, 21);
 		settingsPanelWindow.add(settingsAppFolder);
+		
+		JLabel settingsCloseWithoutSavinglbl = new JLabel("Close without saving");
+		settingsCloseWithoutSavinglbl.setForeground(Color.WHITE);
+		settingsCloseWithoutSavinglbl.setFont(new Font("Arial", Font.BOLD, 12));
+		settingsCloseWithoutSavinglbl.setBounds(10, 94, 145, 21);
+		settingsPanelWindow.add(settingsCloseWithoutSavinglbl);
+		
+		JButton settingsCloseWithoutSaving = new JButton("Close");
+		settingsCloseWithoutSaving.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				should_not_save = true;
+				System.exit(0);
+			}
+		});
+		settingsCloseWithoutSaving.setBounds(165, 94, 105, 21);
+		settingsPanelWindow.add(settingsCloseWithoutSaving);
 
 		WindowUtils.setWindowButtonStyle(windowButtons);
 		updateCurrentWindow(currentWindow);
 		homeDisplayData(true); // True if we want to update team, false players
 		onTeamsChanged();
+	}
+	
+	public static void onMatchChanged() {
+//		if (frame == null) return;
+		Boolean matchReady = leagueLocalTeamList.getSelectedIndex() != -1 && leagueOutsiderTeamList.getSelectedIndex() != -1;
+
+		leagueLocalSetPlayerPoints.setEnabled(matchReady);
+		leagueOutsiderSetPlayerPoints.setEnabled(matchReady);
+		
+		leagueSaveMatch.setEnabled(leagueMatchLogData.size() > 0);
+		leagueCancelMatch.setEnabled(leagueMatchLogData.size() > 0);
+		
+		leagueLocalTeamList.setEnabled(leagueMatchLogData.size() == 0);
+		leagueOutsiderTeamList.setEnabled(leagueMatchLogData.size() == 0);
 	}
 
 	public static void onTeamsChanged() {
@@ -1186,6 +1315,10 @@ public class MainForm extends JFrame {
 
 		leagueLocalTeamList.setEnabled(htdEnabled);
 		leagueOutsiderTeamList.setEnabled(htdEnabled);
+		leagueLocalPlayerPoints.setEnabled(htdEnabled);
+		leagueOutsiderPlayerPoints.setEnabled(htdEnabled);
+		leagueLocalSetPlayerPoints.setEnabled(htdEnabled);
+		leagueOutsiderSetPlayerPoints.setEnabled(htdEnabled);
 		tabbedPane.setEnabledAt(1, htdEnabled);
 //		leagueClassification.set
 

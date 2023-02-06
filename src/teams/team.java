@@ -11,7 +11,7 @@ public class team implements Serializable {
     private String name;
     private String code;
     private Integer classification;
-    private Integer points;
+    private Double points;
     private ArrayList<player> players;
     private coach coach;
 
@@ -20,7 +20,7 @@ public class team implements Serializable {
         this.name = "";
         this.code = "";
         this.classification = 0;
-        this.points = 0;
+        this.points = 0.;
         this.players = new ArrayList<player>();
         this.coach = null;
     }
@@ -29,12 +29,12 @@ public class team implements Serializable {
         this.name = name;
         this.code = code;
         this.classification = 0;
-        this.points = 0;
+        this.points = 0.;
         this.players = new ArrayList<player>();
         this.coach = null;
     }
 
-    public team(String name, String code, Integer classification, Integer points, ArrayList<player> players, coach coach) {
+    public team(String name, String code, Integer classification, Double points, ArrayList<player> players, coach coach) {
         this.name = name;
         this.code = code;
         this.classification = classification;
@@ -76,12 +76,16 @@ public class team implements Serializable {
         this.classification = classification;
     }
 
-	public Integer getPoints() {
+	public Double getPoints() {
         return points;
     }
 
-    public void setPoints(Integer points) {
+    public void setPoints(Double points) {
         this.points = points;
+    }
+    
+    public void addPoints(Double points) {
+        this.points += points;
     }
 
     public ArrayList<player> getPlayers() {
