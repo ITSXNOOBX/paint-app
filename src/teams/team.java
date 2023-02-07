@@ -131,6 +131,13 @@ public class team implements Serializable {
         return result;
     }
     
+    public int compareTo(team other) {
+    	int res = (int) (this.points - other.points);
+    	if (res == 0)
+    		res = this.classification - other.classification;
+        return res;
+    }
+    
     @Override
 	public String toString() {
 		return name;

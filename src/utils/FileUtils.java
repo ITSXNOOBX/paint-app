@@ -10,6 +10,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 
+import matches.match;
+
 public class FileUtils {
 
     String formattedDate = new SimpleDateFormat("HH:mm:ss").format(new Date());
@@ -21,6 +23,7 @@ public class FileUtils {
     public static final String path_log = logs_root + new SimpleDateFormat("dd-MM-yyyy_HH-mm-ss").format(new Date()) + "_paint-app.log";
     public static final String path_teams = root + "teams_data.bin";
     public static final String path_players = root + "players_data.bin";
+    public static final String path_matches = root + "match_data.bin";
     public static final String path_coach = root + "coach_data.bin";
 
 
@@ -59,6 +62,8 @@ public class FileUtils {
         	path = path_coach;
         } else if(obj.get(0) instanceof player) {
             path = path_players;
+        } else if(obj.get(0) instanceof match) {
+        	path = path_matches;
         } else if(obj.get(0) instanceof team) {
             path = path_teams;
         } else {
@@ -76,7 +81,7 @@ public class FileUtils {
             oos.close();
             fos.close();
         } catch (IOException e) {
-//            e.printStackTrace();
+        	// e.printStackTrace();
         	status = false;
         }
         return status;
@@ -88,6 +93,8 @@ public class FileUtils {
             path = path_coach;
         } else if(obj_type.equals("player")) {
             path = path_players;
+        } else if(obj_type.equals("match")) {
+        	path = path_matches;
         } else if(obj_type.equals("team")) {
             path = path_teams;
         } else {
@@ -121,6 +128,7 @@ public class FileUtils {
     		}
         } catch (IOException d) {
             // TODO Auto-generated catch block
+        	// d.printStackTrace();
         	// return null;
         }
         return temp;

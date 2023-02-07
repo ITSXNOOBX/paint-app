@@ -1,17 +1,28 @@
 package matches;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import teams.team;
 
-public class match {
+public class match implements Serializable {
 		private team local;
 		private team outsider;
 		
 		private Double localPoints;
 		private Double outsiderPoints;
 		
-		private ArrayList<score> scoreList = new ArrayList<score>();
+		private ArrayList<score> scoreList;
+		
+		public match(team local, Double localPoints, team outsider, Double outsiderPoints, ArrayList<score> scoreList) {
+			this.local = local;
+			this.localPoints = localPoints;
+			
+			this.outsider = outsider;
+			this.outsiderPoints = outsiderPoints;
+			
+			this.scoreList = scoreList;
+		}
 
 		public team getLocal() {
 			return local;
@@ -52,9 +63,17 @@ public class match {
 		public void setScoreList(ArrayList<score> scoreList) {
 			this.scoreList = scoreList;
 		}
+		
+		public team getWinner() {
+			return localPoints > outsiderPoints ? local : outsider;
+		}
+		
+		public team getLooser() {
+			return localPoints < outsiderPoints ? local : outsider;
+		}
 
 		@Override
 		public String toString() {
-			return "L: " + local + " scored " + localPoints + ", O: " + outsider + " scored " + outsiderPoints;
+			return "Local team:  " + local + " scored " + localPoints + " vs Outsider team: " + outsider + " scored " + outsiderPoints + "; Winner: " + getWinner();
 		}
 }

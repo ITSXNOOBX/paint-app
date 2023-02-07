@@ -48,9 +48,11 @@ import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.event.ListSelectionListener;
 
+import matches.match;
 import matches.score;
 import person.coach;
 import person.player;
+import teams.classification;
 import teams.team;
 
 import javax.swing.event.ListSelectionEvent;
@@ -117,6 +119,9 @@ public class MainForm extends JFrame {
 	static JList leagueLocalPlayerList;
 	static JButton leagueSaveMatch;
 	static JButton leagueCancelMatch;
+	
+	static DefaultListModel<classification> leagueTeamClassificationData = new DefaultListModel<classification>();
+	static DefaultListModel<match> leagueMatchListData = new DefaultListModel<match>();
 	
 	/**
 	 * Launch the application.
@@ -449,7 +454,7 @@ public class MainForm extends JFrame {
 		homePanelWindow.add(lblNewLabel);
 
 		leaguePanelWindow = new JPanel();
-		layeredPane.setLayer(leaguePanelWindow, 4);
+		layeredPane.setLayer(leaguePanelWindow, 1);
 		leaguePanelWindow.setBackground(new Color(45, 45, 48));
 		leaguePanelWindow.setBounds(0, 0, 580, 450);
 		layeredPane.add(leaguePanelWindow);
@@ -462,6 +467,7 @@ public class MainForm extends JFrame {
 		leaguePanelWindow.add(tabbedPane);
 
 		JPanel matchesSubPanel = new JPanel();
+		matchesSubPanel.setForeground(new Color(255, 255, 255));
 		matchesSubPanel.setBackground(new Color(45, 45, 48));
 		tabbedPane.addTab("Matches", null, matchesSubPanel, null);
 		tabbedPane.setBackgroundAt(0, new Color(0, 122, 204));
@@ -518,7 +524,7 @@ public class MainForm extends JFrame {
 		leagueLocalTeamSelectedPlayer.setHorizontalAlignment(SwingConstants.RIGHT);
 		leagueLocalTeamSelectedPlayer.setForeground(Color.WHITE);
 		leagueLocalTeamSelectedPlayer.setFont(new Font("Arial", Font.BOLD, 15));
-		leagueLocalTeamSelectedPlayer.setBounds(10, 328, 180, 15);
+		leagueLocalTeamSelectedPlayer.setBounds(62, 328, 128, 15);
 		matchesSubPanel.add(leagueLocalTeamSelectedPlayer);
 		
 		leagueLocalPlayerList = new JList();
@@ -583,6 +589,8 @@ public class MainForm extends JFrame {
 		leagueLocalPlayerPoints.setColumns(1);
 
 		leagueLocalSetPlayerPoints = new JButton("Save Points");
+		leagueLocalSetPlayerPoints.setForeground(new Color(255, 255, 255));
+		leagueLocalSetPlayerPoints.setBackground(new Color(70, 70, 75));
 		leagueLocalSetPlayerPoints.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 //				if (leagueLocalTeamList.getSelectedIndex() != -1 && leagueOutsiderTeamList.getSelectedIndex() != -1) return;
@@ -607,6 +615,7 @@ public class MainForm extends JFrame {
 		});
 		leagueLocalSetPlayerPoints.setBounds(10, 375, 180, 38);
 		matchesSubPanel.add(leagueLocalSetPlayerPoints);
+		windowButtons.add(leagueLocalSetPlayerPoints);
 
 		leagueOutsiderTeamList = new JComboBox<Object>();
 		leagueOutsiderTeamList.addActionListener(new ActionListener() {
@@ -639,7 +648,7 @@ public class MainForm extends JFrame {
 		leagueOutsiderTeamSelectedPlayer.setHorizontalAlignment(SwingConstants.RIGHT);
 		leagueOutsiderTeamSelectedPlayer.setForeground(Color.WHITE);
 		leagueOutsiderTeamSelectedPlayer.setFont(new Font("Arial", Font.BOLD, 15));
-		leagueOutsiderTeamSelectedPlayer.setBounds(384, 328, 180, 15);
+		leagueOutsiderTeamSelectedPlayer.setBounds(436, 328, 128, 15);
 		matchesSubPanel.add(leagueOutsiderTeamSelectedPlayer);
 
 		leagueOutsiderPlayerList = new JList();
@@ -703,6 +712,8 @@ public class MainForm extends JFrame {
 		matchesSubPanel.add(leagueOutsiderPlayerPoints);
 
 		leagueOutsiderSetPlayerPoints = new JButton("Save Points");
+		leagueOutsiderSetPlayerPoints.setForeground(new Color(255, 255, 255));
+		leagueOutsiderSetPlayerPoints.setBackground(new Color(70, 70, 75));
 		leagueOutsiderSetPlayerPoints.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 //				if (leagueLocalTeamList.getSelectedIndex() != -1 && leagueOutsiderTeamList.getSelectedIndex() != -1) return;
@@ -726,6 +737,8 @@ public class MainForm extends JFrame {
 		});
 		leagueOutsiderSetPlayerPoints.setBounds(384, 375, 180, 38);
 		matchesSubPanel.add(leagueOutsiderSetPlayerPoints);
+		windowButtons.add(leagueOutsiderSetPlayerPoints);
+
 
 		JLabel leagueLlbl = new JLabel("L");
 		leagueLlbl.setForeground(Color.WHITE);
@@ -791,6 +804,7 @@ public class MainForm extends JFrame {
 		windowButtons.add(leagueCancelMatch);
 		
 		leagueSaveMatch = new JButton("");
+		leagueSaveMatch.setForeground(new Color(255, 255, 255));
 		leagueSaveMatch.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
@@ -800,6 +814,7 @@ public class MainForm extends JFrame {
 				Double localPoints = 0.;
 				Double outsiderPoints = 0.;
 				
+				ArrayList<score> temp_scores = new ArrayList<score>();
 				for (int i=0; i< leagueMatchLogData.size(); i++) {
 					score player_score = leagueMatchLogData.get(i);
 					player ply = player_score.getScorer();
@@ -809,15 +824,31 @@ public class MainForm extends JFrame {
 						outsiderPoints += player_score.getPoints();
 					
 					ply.addPoints(player_score.getPoints());
+					temp_scores.add(player_score);
 				}
-				
 				
 				localTeam.addPoints(localPoints);
 				outsiderTeam.addPoints(outsiderPoints);
 				
+				DataUtils.matches.add(new match(localTeam, localPoints, outsiderTeam, outsiderPoints, temp_scores));
+				
 				NotifyUtils.succeed("Successfully created match, " + (localPoints > outsiderPoints ? localTeam.getName() : outsiderTeam.getName()) + " won the match!", null);
+				
+				leagueLocalTeamList.setSelectedIndex(-1);
+				leagueOutsiderTeamList.setSelectedIndex(-1);
+				
+				leagueLocalTeamSelectedPlayer.setText("Select Player");
+				leagueLocalPlayerPoints.setText("0");
+				leagueLocalPlayerListData.clear();
+				
+				leagueOutsiderTeamSelectedPlayer.setText("Select Player");
+				leagueOutsiderPlayerPoints.setText("0");
+				leagueOutsiderPlayerListData.clear();
+				
+				leagueMatchLogData.clear();
+				onTeamsChanged(); 
 			}
-		});
+		});	
 		leagueSaveMatch.setToolTipText("Save Match");
 		leagueSaveMatch.setEnabled(false);
 		leagueSaveMatch.setIcon(new ImageIcon(MainForm.class.getResource("/assets/icons8-done-48.png")));
@@ -842,26 +873,28 @@ public class MainForm extends JFrame {
 		legueLocalTeamSeparator_2.setBounds(10, 27, 555, 1);
 		leagueClassification.add(legueLocalTeamSeparator_2);
 
-		JLabel leaguePlayerClassification = new JLabel("Player Classification");
-		leaguePlayerClassification.setForeground(Color.WHITE);
-		leaguePlayerClassification.setFont(new Font("Arial", Font.BOLD, 15));
-		leaguePlayerClassification.setBounds(10, 216, 180, 13);
-		leagueClassification.add(leaguePlayerClassification);
+		JLabel leagueMatchListlbl = new JLabel("Match List");
+		leagueMatchListlbl.setForeground(Color.WHITE);
+		leagueMatchListlbl.setFont(new Font("Arial", Font.BOLD, 15));
+		leagueMatchListlbl.setBounds(10, 216, 180, 13);
+		leagueClassification.add(leagueMatchListlbl);
 
 		JSeparator legueLocalTeamSeparator_2_1 = new JSeparator();
 		legueLocalTeamSeparator_2_1.setForeground(Color.WHITE);
 		legueLocalTeamSeparator_2_1.setBounds(10, 233, 555, 1);
 		leagueClassification.add(legueLocalTeamSeparator_2_1);
 
-		JList list = new JList();
-		list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		list.setBounds(10, 33, 555, 173);
-		leagueClassification.add(list);
+		JList leagueTeamClassification = new JList();
+		leagueTeamClassification.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		leagueTeamClassification.setBounds(10, 33, 555, 173);
+		leagueClassification.add(leagueTeamClassification);
+		leagueTeamClassification.setModel(leagueTeamClassificationData);
 
-		JList list_1 = new JList();
-		list_1.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		list_1.setBounds(10, 240, 555, 173);
-		leagueClassification.add(list_1);
+		JList leagueMatchList = new JList();
+		leagueMatchList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		leagueMatchList.setBounds(10, 240, 555, 173);
+		leagueClassification.add(leagueMatchList);
+		leagueMatchList.setModel(leagueMatchListData);
 
 		setupLeagueWindow = new JPanel();
 		setupLeagueWindow.setBackground(new Color(45, 45, 48));
@@ -941,6 +974,8 @@ public class MainForm extends JFrame {
 		setupLeagueWindow.add(setupCoachSec);
 
 		JButton setupCreateTeam = new JButton("Create");
+		setupCreateTeam.setForeground(new Color(255, 255, 255));
+		setupCreateTeam.setBackground(new Color(70, 70, 75));
 		setupCreateTeam.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				RegisterTeam.main(null);
@@ -950,6 +985,8 @@ public class MainForm extends JFrame {
 		});
 		setupCreateTeam.setBounds(295, 90, 265, 24);
 		setupLeagueWindow.add(setupCreateTeam);
+		windowButtons.add(setupCreateTeam);
+
 
 		JLabel setupCreateTeamlbl = new JLabel("Create Team");
 		setupCreateTeamlbl.setForeground(Color.WHITE);
@@ -968,6 +1005,8 @@ public class MainForm extends JFrame {
 		setupLeagueWindow.add(setupSelectPlayerLbl);
 
 		setupDeleteTeam = new JButton("Delete");
+		setupDeleteTeam.setForeground(new Color(255, 255, 255));
+		setupDeleteTeam.setBackground(new Color(70, 70, 75));
 		setupDeleteTeam.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				team selected = (team) setupSelectTeam.getSelectedItem();
@@ -989,6 +1028,8 @@ public class MainForm extends JFrame {
 		});
 		setupDeleteTeam.setBounds(295, 126, 265, 24);
 		setupLeagueWindow.add(setupDeleteTeam);
+		windowButtons.add(setupDeleteTeam);
+
 
 		JLabel setupDeleteTeamlbl = new JLabel("Delete Team");
 		setupDeleteTeamlbl.setForeground(Color.WHITE);
@@ -1003,6 +1044,8 @@ public class MainForm extends JFrame {
 		setupLeagueWindow.add(setupCreatePlayerLbl);
 
 		setupCreatePlayer = new JButton("Create");
+		setupCreatePlayer.setBackground(new Color(70, 70, 75));
+		setupCreatePlayer.setForeground(new Color(255, 255, 255));
 		setupCreatePlayer.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				team selectedT = (team) setupSelectTeam.getSelectedItem();
@@ -1019,6 +1062,7 @@ public class MainForm extends JFrame {
 		});
 		setupCreatePlayer.setBounds(295, 226, 265, 24);
 		setupLeagueWindow.add(setupCreatePlayer);
+		windowButtons.add(setupCreatePlayer);
 
 		JLabel setupDeletePlayerLbl = new JLabel("Delete Player");
 		setupDeletePlayerLbl.setForeground(Color.WHITE);
@@ -1027,6 +1071,8 @@ public class MainForm extends JFrame {
 		setupLeagueWindow.add(setupDeletePlayerLbl);
 
 		setupDeletePlayer = new JButton("Delete");
+		setupDeletePlayer.setForeground(new Color(255, 255, 255));
+		setupDeletePlayer.setBackground(new Color(70, 70, 75));
 		setupDeletePlayer.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				team selectedT = (team) setupSelectTeam.getSelectedItem();
@@ -1061,6 +1107,8 @@ public class MainForm extends JFrame {
 		});
 		setupDeletePlayer.setBounds(295, 262, 265, 24);
 		setupLeagueWindow.add(setupDeletePlayer);
+		windowButtons.add(setupDeletePlayer);
+
 
 		JLabel setupCreateCoachlbl = new JLabel("Create Coach");
 		setupCreateCoachlbl.setForeground(Color.WHITE);
@@ -1069,6 +1117,8 @@ public class MainForm extends JFrame {
 		setupLeagueWindow.add(setupCreateCoachlbl);
 
 		setupCreateCoach = new JButton("Create");
+		setupCreateCoach.setBackground(new Color(70, 70, 75));
+		setupCreateCoach.setForeground(new Color(255, 255, 255));
 		setupCreateCoach.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				team selectedT = (team) setupSelectTeam.getSelectedItem();
@@ -1082,6 +1132,8 @@ public class MainForm extends JFrame {
 		});
 		setupCreateCoach.setBounds(295, 362, 265, 24);
 		setupLeagueWindow.add(setupCreateCoach);
+		windowButtons.add(setupCreateCoach);
+
 
 		JLabel setupDeleteCoachlbl = new JLabel("Delete Coach");
 		setupDeleteCoachlbl.setForeground(Color.WHITE);
@@ -1090,6 +1142,8 @@ public class MainForm extends JFrame {
 		setupLeagueWindow.add(setupDeleteCoachlbl);
 
 		setupDeleteCoach = new JButton("Delete");
+		setupDeleteCoach.setBackground(new Color(70, 70, 75));
+		setupDeleteCoach.setForeground(new Color(255, 255, 255));
 		setupDeleteCoach.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				team selectedT = (team) setupSelectTeam.getSelectedItem();
@@ -1116,6 +1170,7 @@ public class MainForm extends JFrame {
 		});
 		setupDeleteCoach.setBounds(295, 398, 265, 24);
 		setupLeagueWindow.add(setupDeleteCoach);
+		windowButtons.add(setupDeleteCoach);
 
 		JLabel lblCoach_1 = new JLabel("Coach");
 		lblCoach_1.setForeground(Color.WHITE);
@@ -1131,7 +1186,7 @@ public class MainForm extends JFrame {
 
 		settingsPanelWindow = new JPanel();
 		settingsPanelWindow.setBackground(new Color(45, 45, 48));
-		layeredPane.setLayer(settingsPanelWindow, 5);
+		layeredPane.setLayer(settingsPanelWindow, 3);
 		settingsPanelWindow.setBounds(0, 0, 580, 450);
 		layeredPane.add(settingsPanelWindow);
 		settingsPanelWindow.setLayout(null);
@@ -1173,6 +1228,8 @@ public class MainForm extends JFrame {
 		settingsPanelWindow.add(settingsSysCLogs);
 
 		JButton settingsSysClearLogsBtn = new JButton("Clear");
+		settingsSysClearLogsBtn.setForeground(new Color(255, 255, 255));
+		settingsSysClearLogsBtn.setBackground(new Color(70, 70, 75));
 		settingsSysClearLogsBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Boolean success = FileUtils.clearDirectory(new File(FileUtils.logs_root));
@@ -1181,6 +1238,8 @@ public class MainForm extends JFrame {
 		});
 		settingsSysClearLogsBtn.setBounds(465, 125, 105, 21);
 		settingsPanelWindow.add(settingsSysClearLogsBtn);
+		windowButtons.add(settingsSysClearLogsBtn);
+
 
 		JLabel settingsSysClearCache = new JLabel("Clear Cache");
 		settingsSysClearCache.setForeground(Color.WHITE);
@@ -1189,6 +1248,8 @@ public class MainForm extends JFrame {
 		settingsPanelWindow.add(settingsSysClearCache);
 
 		JButton settingsSysClearCacheBtn = new JButton("Clear");
+		settingsSysClearCacheBtn.setForeground(new Color(255, 255, 255));
+		settingsSysClearCacheBtn.setBackground(new Color(70, 70, 75));
 		settingsSysClearCacheBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Boolean success = FileUtils.clearDirectory(new File(FileUtils.cache_root));
@@ -1197,6 +1258,7 @@ public class MainForm extends JFrame {
 		});
 		settingsSysClearCacheBtn.setBounds(465, 156, 105, 21);
 		settingsPanelWindow.add(settingsSysClearCacheBtn);
+		windowButtons.add(settingsSysClearCacheBtn);
 
 		JLabel settingsSysFRestoreLbl = new JLabel("Full Clean");
 		settingsSysFRestoreLbl.setEnabled(false);
@@ -1206,10 +1268,13 @@ public class MainForm extends JFrame {
 		settingsPanelWindow.add(settingsSysFRestoreLbl);
 
 		JButton settingsSysFullRestore = new JButton("Clean");
+		settingsSysFullRestore.setForeground(new Color(255, 255, 255));
+		settingsSysFullRestore.setBackground(new Color(70, 70, 75));
 		settingsSysFullRestore.setEnabled(false);
 		settingsSysFullRestore.setToolTipText("This will completely remove all the data of the app");
 		settingsSysFullRestore.setBounds(466, 380, 104, 21);
 		settingsPanelWindow.add(settingsSysFullRestore);
+		windowButtons.add(settingsSysFullRestore);
 
 		JLabel settingsSysUninstall = new JLabel("Uninstall");
 		settingsSysUninstall.setEnabled(false);
@@ -1219,10 +1284,14 @@ public class MainForm extends JFrame {
 		settingsPanelWindow.add(settingsSysUninstall);
 
 		JButton settingsSysUninstallBtn = new JButton("Uninstall");
+		settingsSysUninstallBtn.setForeground(new Color(255, 255, 255));
+		settingsSysUninstallBtn.setBackground(new Color(70, 70, 75));
 		settingsSysUninstallBtn.setEnabled(false);
 		settingsSysUninstallBtn.setToolTipText("This will completely remove the app");
 		settingsSysUninstallBtn.setBounds(466, 414, 104, 21);
 		settingsPanelWindow.add(settingsSysUninstallBtn);
+		windowButtons.add(settingsSysUninstallBtn);
+
 
 		JCheckBox chckbxNewCheckBox = new JCheckBox("Enable Risky Options");
 		chckbxNewCheckBox.addItemListener(new ItemListener() {
@@ -1247,12 +1316,13 @@ public class MainForm extends JFrame {
 		settingsPanelWindow.add(settingsAppFolderlbl);
 
 		JButton settingsAppFolder = new JButton("Open");
+		settingsAppFolder.setForeground(new Color(255, 255, 255));
+		settingsAppFolder.setBackground(new Color(70, 70, 75));
 		settingsAppFolder.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					Desktop.getDesktop().open(new File(FileUtils.root));
 				} catch (IOException e1) {
-					// TODO Auto-generated catch block
 					NotifyUtils.error("Cant open folder path.", "App error");
 					FileUtils.logToFile("App error, cannot open the app folder.");
 				}
@@ -1260,6 +1330,8 @@ public class MainForm extends JFrame {
 		});
 		settingsAppFolder.setBounds(465, 94, 105, 21);
 		settingsPanelWindow.add(settingsAppFolder);
+		windowButtons.add(settingsAppFolder);
+
 		
 		JLabel settingsCloseWithoutSavinglbl = new JLabel("Close without saving");
 		settingsCloseWithoutSavinglbl.setForeground(Color.WHITE);
@@ -1268,6 +1340,8 @@ public class MainForm extends JFrame {
 		settingsPanelWindow.add(settingsCloseWithoutSavinglbl);
 		
 		JButton settingsCloseWithoutSaving = new JButton("Close");
+		settingsCloseWithoutSaving.setForeground(new Color(255, 255, 255));
+		settingsCloseWithoutSaving.setBackground(new Color(70, 70, 75));
 		settingsCloseWithoutSaving.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				should_not_save = true;
@@ -1276,17 +1350,45 @@ public class MainForm extends JFrame {
 		});
 		settingsCloseWithoutSaving.setBounds(165, 94, 105, 21);
 		settingsPanelWindow.add(settingsCloseWithoutSaving);
+		windowButtons.add(settingsCloseWithoutSaving);
+
 
 		WindowUtils.setWindowButtonStyle(windowButtons);
 		updateCurrentWindow(currentWindow);
 		homeDisplayData(true); // True if we want to update team, false players
 		onTeamsChanged();
+		onMatchChanged();
+	}
+	
+	public static void reOrderTeams() {
+		leagueTeamClassificationData.clear();
+		for (team t : DataUtils.teams) {
+			Boolean isin = false;
+			for (int i = 0; i < leagueTeamClassificationData.size(); i++) {
+				if (t.compareTo(leagueTeamClassificationData.get(i)) > 0 && !isin) {
+					t.setKlasifikation(i+1);
+					leagueTeamClassificationData.add(i, new classification(t)); isin = true;
+//					break;
+				}
+				leagueTeamClassificationData.get(i).setKlasifikation(i+1);
+			}
+			if (!isin) {
+				t.setKlasifikation(leagueTeamClassificationData.size()+1);
+				leagueTeamClassificationData.addElement(new classification(t));
+			}
+//			FileUtils.logToFile("Team clasification executed, " + t.getName() + " has been clasified with " + (isin ? "coparing" : "luck") + " in the league in position " + t.getKlasifikation());
+		}
 	}
 	
 	public static void onMatchChanged() {
 //		if (frame == null) return;
 		Boolean matchReady = leagueLocalTeamList.getSelectedIndex() != -1 && leagueOutsiderTeamList.getSelectedIndex() != -1;
-
+		if (matchReady) {
+			matchReady = ((team) leagueLocalTeamList.getSelectedItem()).getPlayers().size() > 1 && ((team) leagueOutsiderTeamList.getSelectedItem()).getPlayers().size() > 1;
+			if (!matchReady) FileUtils.logToFile("One of the selected teams has less than 2 players, requested to chose other teams.");
+			if (!matchReady) NotifyUtils.warn("One of the selected teams has less than 2 players, please add them or choose another teams.", null);
+		}
+		
 		leagueLocalSetPlayerPoints.setEnabled(matchReady);
 		leagueOutsiderSetPlayerPoints.setEnabled(matchReady);
 		
@@ -1295,6 +1397,9 @@ public class MainForm extends JFrame {
 		
 		leagueLocalTeamList.setEnabled(leagueMatchLogData.size() == 0);
 		leagueOutsiderTeamList.setEnabled(leagueMatchLogData.size() == 0);
+		
+		leagueMatchListData.clear(); leagueMatchListData.addAll(DataUtils.matches);
+		reOrderTeams();
 	}
 
 	public static void onTeamsChanged() {
@@ -1303,7 +1408,7 @@ public class MainForm extends JFrame {
 		homeTeamData.clear();
 		homeTeamData.addAll(DataUtils.teams);
 
-		Boolean htdEnabled = homeTeamData.size() > 0;
+		Boolean htdEnabled = homeTeamData.size() > 1;
 		setupSelectTeam.setEnabled(htdEnabled);
 		setupDeleteTeam.setEnabled(htdEnabled);
 		setupSelectPlayer.setEnabled(htdEnabled);

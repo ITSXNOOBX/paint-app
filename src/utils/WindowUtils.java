@@ -28,6 +28,13 @@ public class WindowUtils extends JFrame  {
         }
     }
     
+    public static void ARLToComboBoxAdd(ArrayList<?> arl, JComboBox<Object> combo) {   
+    	combo.removeAllItems(); // Easyer to clean and set again :D
+    	for (int i = 0; i < arl.size(); i++) {
+    		combo.addItem(arl.get(i));
+    	}
+    }
+    
     public static Boolean isNumberChar(char key) {   
     	for (char n : number) if (n == key) return true;
     	return false;

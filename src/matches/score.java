@@ -1,9 +1,11 @@
 package matches;
 
+import java.io.Serializable;
+
 import person.player;
 import teams.team;
 
-public class score {
+public class score implements Serializable {
 	private Integer local = 0; // null, 0 = local, 1 = Outsider
 	private player scorer;
 	private Double points;
