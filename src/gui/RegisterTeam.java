@@ -206,7 +206,11 @@ public class RegisterTeam extends JFrame {
 				String tName = teamNameTxb.getText().replace(" ", "-");
 				String tCode = teamCodeTxb.getText().replace(" ", "-");
 				
-				if (tName.length() < 4 || tName.length() > 15) {
+				if (DataUtils.teams.size() > 8) {
+					NotifyUtils.error("There are a lot of teams already, you cant add any more.", "User Error!");
+                    FileUtils.logToFile("User Error!, There are a lot of teams already, you cant add any more.");
+                    return;
+				} else if (tName.length() < 4 || tName.length() > 15) {
 					NotifyUtils.error("The team name is invalid, please write at least 4 characters and less than 15 characters.", "User Error!");
                     FileUtils.logToFile("User Error!, The team name is invalid, please write at least 4 characters and less than 15 characters.");
                     return;

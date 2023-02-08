@@ -103,6 +103,9 @@ public class team implements Serializable {
     public void removePlayerIndex(Integer index) {
         this.players.remove(index);
     }
+    public Boolean removePlayer(player ply) {
+    	return this.players.remove(ply);
+    }
 
     
     public person.coach getCoach() {

@@ -324,8 +324,14 @@ public class RegisterPlayer extends JFrame {
 					Integer pAge = Integer.parseInt(playerAge.getText().replace(" ", ""));
 					Integer pNumber = Integer.parseInt(playerNumber.getText().replace(" ", ""));
 					Boolean pHeadline = playerHeadline.isSelected();
+					team playerTeam = null;
+					for (team t : DataUtils.teams) if (t.getName().equals(tName)) playerTeam = t;
 					
-					if (pName.length() < 3) {
+					if (playerTeam == null || playerTeam.getPlayers().size() > 9) {
+						NotifyUtils.error("The team has too many players, you cant add more than 9.", "User Error!");
+	                    FileUtils.logToFile("User Error!, The team has too many players, you cant add more than 9.");
+	                    return;
+					} else if (pName.length() < 3) {
 						NotifyUtils.error("The player name is invalid, please write at least 3.", "User Error!");
 	                    FileUtils.logToFile("The player name is invalid, please write at least 3.");
 	                    return;
@@ -360,12 +366,9 @@ public class RegisterPlayer extends JFrame {
 					}
 					
 					Boolean code_exists = false;
-					for (team t : DataUtils.teams) {
-						if (t.getName().equals(tName)) 
-							for (player p : t.getPlayers())
-								if (p.getTeam_number() == pNumber)
-									code_exists = true;
-					}
+					for (player p : playerTeam.getPlayers())
+						if (p.getTeam_number() == pNumber)
+							code_exists = true;
 					
 					if (code_exists) {
 						NotifyUtils.error("This player team number: '" + pNumber +"' belongs to another player. please use another number.", "User Error!");
@@ -378,10 +381,7 @@ public class RegisterPlayer extends JFrame {
 					
 					DataUtils.players.add(newPlayer);
 					
-					for (team t : DataUtils.teams) {
-						if (t.getName().equals(tName)) 
-							t.addPlayer(newPlayer);
-					}
+					playerTeam.addPlayer(newPlayer);
 					
 					MainForm.onTeamsChanged(); // Trigger player update event
 

@@ -49,8 +49,15 @@ public class FileUtils {
     public static Boolean clearDirectory(File dir) {
     	for(File file : dir.listFiles()) 
     	    if (!file.isDirectory()) 
-    	        file.delete();
+    	        if(!file.delete()) return false;
     	return true;
+    }
+    public static Boolean removeDirectory(File dir) {
+    	Boolean status = true;
+    	for(File file : dir.listFiles()) 
+    		
+    		if(!file.delete()) status = false;
+    	return status;
     }
     
     public static boolean writeObjectToFile(ArrayList<?> obj) {

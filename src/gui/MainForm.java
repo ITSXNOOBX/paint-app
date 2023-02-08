@@ -5,6 +5,7 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.EmptyBorder;
@@ -65,6 +66,7 @@ import java.awt.event.KeyEvent;
 import javax.swing.ListSelectionModel;
 import java.awt.event.ContainerAdapter;
 import java.awt.event.ContainerEvent;
+import javax.swing.JScrollBar;
 
 public class MainForm extends JFrame {
 
@@ -454,7 +456,7 @@ public class MainForm extends JFrame {
 		homePanelWindow.add(lblNewLabel);
 
 		leaguePanelWindow = new JPanel();
-		layeredPane.setLayer(leaguePanelWindow, 1);
+		layeredPane.setLayer(leaguePanelWindow, 4);
 		leaguePanelWindow.setBackground(new Color(45, 45, 48));
 		leaguePanelWindow.setBounds(0, 0, 580, 450);
 		layeredPane.add(leaguePanelWindow);
@@ -808,6 +810,10 @@ public class MainForm extends JFrame {
 		leagueSaveMatch.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
+				Integer option = JOptionPane.showConfirmDialog(null, "Are your sure the match is finished, after playing it you wont be able to edit/remove it!"); // 0 = yes, 1 = no, 2 = cancel
+				FileUtils.logToFile("Match confirm option has been triggered, user has " + (option == 0 ? "allowed" : option == 1 ? "denied" : "canceled") + " the operation.");
+				if (option != 0) return;
+				
 				team localTeam = (team) leagueLocalTeamList.getSelectedItem();
 				team outsiderTeam = (team) leagueOutsiderTeamList.getSelectedItem();
 				
@@ -883,18 +889,25 @@ public class MainForm extends JFrame {
 		legueLocalTeamSeparator_2_1.setForeground(Color.WHITE);
 		legueLocalTeamSeparator_2_1.setBounds(10, 233, 555, 1);
 		leagueClassification.add(legueLocalTeamSeparator_2_1);
-
+		
+		JScrollPane leagueTeamClassificationScroll = new JScrollPane();
+		leagueTeamClassificationScroll.setBounds(10, 33, 555, 173);
+		leagueClassification.add(leagueTeamClassificationScroll);
+		
 		JList leagueTeamClassification = new JList();
 		leagueTeamClassification.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		leagueTeamClassification.setBounds(10, 33, 555, 173);
-		leagueClassification.add(leagueTeamClassification);
+		leagueTeamClassificationScroll.setViewportView(leagueTeamClassification);
 		leagueTeamClassification.setModel(leagueTeamClassificationData);
-
+		
+		JScrollPane leagueMatchListScroll = new JScrollPane();
+		leagueMatchListScroll.setBounds(10, 240, 555, 173);
+		leagueClassification.add(leagueMatchListScroll);
+		
 		JList leagueMatchList = new JList();
+		leagueMatchListScroll.setViewportView(leagueMatchList);
 		leagueMatchList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		leagueMatchList.setBounds(10, 240, 555, 173);
-		leagueClassification.add(leagueMatchList);
 		leagueMatchList.setModel(leagueMatchListData);
+
 
 		setupLeagueWindow = new JPanel();
 		setupLeagueWindow.setBackground(new Color(45, 45, 48));
@@ -1012,14 +1025,24 @@ public class MainForm extends JFrame {
 				team selected = (team) setupSelectTeam.getSelectedItem();
 				if (selected == null)
 					return;
-
-				for (int i = 0; i < DataUtils.teams.size(); i++) {
-					team iteam = DataUtils.teams.get(i);
-					if (selected.equals(iteam)) {
-						DataUtils.teams.remove(i);
+				
+				Boolean sreturn = false;
+				for (match m : DataUtils.matches) {
+					if (selected.equals(m.getLocal()) || selected.equals(m.getOutsider())) {
 						FileUtils.logToFile(
-								"Deleted team '" + iteam.getName() + "' with code '" + iteam.getCode() + "'");
+								"Blocked '" + selected.getName() + "' from been deleted cause already has played matches");
+						NotifyUtils.error("You cant delete " + selected.getName() + " they already have played matches", null);
+						sreturn = true;
+						break;
 					}
+				}
+				if (sreturn) return;
+				
+				
+				if(DataUtils.teams.remove(selected)) {
+					FileUtils.logToFile(
+							"Deleted team '" + selected.getName() + "' with code '" + selected.getCode() + "'");
+					NotifyUtils.succeed("Deleted team '" + selected.getName() + "' with code '" + selected.getCode() + "'", null);
 				}
 
 				homeDisplayData(true);
@@ -1078,27 +1101,54 @@ public class MainForm extends JFrame {
 				team selectedT = (team) setupSelectTeam.getSelectedItem();
 				if (selectedT == null)
 					return;
-//				
+
 				player selectedP = (player) setupSelectPlayer.getSelectedItem();
 				if (selectedP == null)
 					return;
-
-				for (int i = 0; i < DataUtils.players.size(); i++) {
-					player iplayer = DataUtils.players.get(i);
-					if (selectedP.equals(iplayer)) {
-						FileUtils.logToFile(
-								"Deleted player " + iplayer.getName() + ", " + Arrays.toString(iplayer.getSurnames()));
-						DataUtils.teams.remove(i);
+				
+				Boolean sreturn = false;
+				for (match m : DataUtils.matches) {
+					for (score s : m.getScoreList()) {						
+						if (selectedP.equals(s.getScorer())) {
+							FileUtils.logToFile(
+									"Blocked player '" + selectedP.getName() + "' from been deleted cause already has played matches");
+							NotifyUtils.error("You cant delete " + selectedP.getName() + " he/she has already have played matches", null);
+							sreturn = true;
+							break;
+						}
 					}
 				}
+				if (sreturn) return;	
+				
+//				for (int i=0; i < DataUtils.players.size(); i++) 
+//				if (selectedP.equals(DataUtils.players.get(i)))
+//				if (DataUtils.players.remove(i) != null) {					
+//					FileUtils.logToFile(
+//							"Deleted player " + selectedP.getName() + ", " + Arrays.toString(selectedP.getSurnames()));
+//					NotifyUtils.succeed(
+//							"Deleted player " + selectedP.getName() + ", " + Arrays.toString(selectedP.getSurnames()), null);
+//				} else return;
+				
+//				for (int i = 0; i < selectedT.getPlayers().size(); i++) {
+//				player iplayer = selectedT.getPlayers().get(i);
+//				if (selectedP.equals(iplayer)) {
+//					FileUtils.logToFile("Deleted from team " + selectedT.getName() + " player " + iplayer.getName()
+//							+ ", " + Arrays.toString(iplayer.getSurnames()));
+//					selectedT.removePlayerIndex(i);
+//				}
+//			}
+				
+				if (DataUtils.players.remove(selectedP)) {					
+					FileUtils.logToFile(
+							"Deleted player " + selectedP.getName() + ", " + Arrays.toString(selectedP.getSurnames()));
+					NotifyUtils.succeed(
+							"Deleted player " + selectedP.getName() + ", " + Arrays.toString(selectedP.getSurnames()), null);
+				}
 
-				for (int i = 0; i < selectedT.getPlayers().size(); i++) {
-					player iplayer = selectedT.getPlayers().get(i);
-					if (selectedP.equals(iplayer)) {
-						FileUtils.logToFile("Deleted from team " + selectedT.getName() + " player " + iplayer.getName()
-								+ ", " + Arrays.toString(iplayer.getSurnames()));
-						selectedT.removePlayerIndex(i);
-					}
+
+				if (selectedT.removePlayer(selectedP)) {
+					FileUtils.logToFile("Deleted from team " + selectedT.getName() + " player " + selectedP.getName()
+							+ ", " + Arrays.toString(selectedP.getSurnames()));
 				}
 
 				homeDisplayData(false);
@@ -1252,7 +1302,7 @@ public class MainForm extends JFrame {
 		settingsSysClearCacheBtn.setBackground(new Color(70, 70, 75));
 		settingsSysClearCacheBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Boolean success = FileUtils.clearDirectory(new File(FileUtils.cache_root));
+				Boolean success = FileUtils.removeDirectory(new File(FileUtils.cache_root));
 				FileUtils.logToFile("Cleaning cache was a " + (success ? "success" : "failure") + ".");
 			}
 		});
@@ -1268,6 +1318,12 @@ public class MainForm extends JFrame {
 		settingsPanelWindow.add(settingsSysFRestoreLbl);
 
 		JButton settingsSysFullRestore = new JButton("Clean");
+		settingsSysFullRestore.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Boolean success = FileUtils.removeDirectory(new File(FileUtils.root));
+				FileUtils.logToFile("Full cleanning was a " + (success ? "success" : "failure") + ".");
+			}
+		});
 		settingsSysFullRestore.setForeground(new Color(255, 255, 255));
 		settingsSysFullRestore.setBackground(new Color(70, 70, 75));
 		settingsSysFullRestore.setEnabled(false);
@@ -1453,10 +1509,11 @@ public class MainForm extends JFrame {
 					homeTeamList.setModel(homeEmpty);
 				if (homePlayerList.getModel() != homeEmpty)
 					homePlayerList.setModel(homeEmpty);
-				WindowUtils.clearTextFields(homeCoachTextfield, homePointsTextfield, homeClasificationTextfield);
+				WindowUtils.clearTextFields(homeCoachTextfield, homePointsTextfield, homeClasificationTextfield,
+						homePlayerNameTextbox, homeAgeTextbox, homePPointsTextbox, homeHeadlineTexfield);
 				return;
 			}
-
+			
 			if (homeTeamList.getModel() != homeTeamData)
 				homeTeamList.setModel(homeTeamData);
 
@@ -1496,7 +1553,7 @@ public class MainForm extends JFrame {
 		}
 
 		if (homePlayerList.getModel() != homePlayerData)
-			homeTeamList.setModel(homePlayerData);
+			homePlayerList.setModel(homePlayerData);
 		if (pSelected == -1 || homePlayerData.size() - 1 < pSelected)
 			return;
 

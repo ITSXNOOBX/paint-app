@@ -274,9 +274,16 @@ public class RegisterCoach extends JFrame {
 					String pNan = playerNan.getText().replace(" ", "");
 					Integer pAge = Integer.parseInt(playerAge.getText().replace(" ", ""));
 					
-					if (pName.length() < 3) {
+					team coachTeam = null;
+					for (team t : DataUtils.teams) if (t.getName().equals(tName)) coachTeam = t;
+					
+					if (coachTeam == null || coachTeam.getCoach() != null) {
+						NotifyUtils.error("This team already has a coach, please delete it before making it again.", "User Error!");
+	                    FileUtils.logToFile("User Error!, This team already has a coach, please delete it before making it again.");
+	                    return;
+					} else if (pName.length() < 3) {
 						NotifyUtils.error("The coach name is invalid, please write at least 3.", "User Error!");
-	                    FileUtils.logToFile("The coach name is invalid, please write at least 3.");
+	                    FileUtils.logToFile("User Error!, The coach name is invalid, please write at least 3.");
 	                    return;
 					} else if (pSurname.length > 4) {
 						NotifyUtils.error("The coach has too many surnames", "User Error!");
@@ -308,16 +315,13 @@ public class RegisterCoach extends JFrame {
 					
 					DataUtils.coaches.add(newCoach);
 					
-					for (team t : DataUtils.teams) {
-						if (t.getName().equals(tName)) 
-							t.setCoach(newCoach);
-					}
+					coachTeam.setCoach(newCoach);
 					
 					MainForm.onTeamsChanged(); // Trigger coach update event
 
 			        FileUtils.logToFile("Added new coach to team "+ tName + " with name: " + pName + ", " + Arrays.toString(pSurname));
 					NotifyUtils.succeed("Successfully added "+ pName + " to " + tName, null);
-
+					close();
 				}
 			});
 			
