@@ -16,6 +16,9 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+/*
+ * @version 1.0.3
+ */
 @SuppressWarnings("serial")
 public class WindowUtils extends JFrame  {
     private static int mouseX, mouseY;

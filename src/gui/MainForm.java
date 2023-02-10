@@ -156,7 +156,7 @@ public class MainForm extends JFrame {
 	 */
 	@SuppressWarnings("unchecked")
 	public MainForm() {
-		setFont(new Font("Arial", Font.PLAIN, 12));
+		setFont(new Font("Arial", Font.BOLD, 12));
 		setIconImage(Toolkit.getDefaultToolkit().getImage(MainForm.class.getResource("/assets/painballogo.png")));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 885, 559);
@@ -1282,7 +1282,7 @@ public class MainForm extends JFrame {
 		settingsSysClearLogsBtn.setBackground(new Color(70, 70, 75));
 		settingsSysClearLogsBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Boolean success = FileUtils.clearDirectory(new File(FileUtils.logs_root));
+				Boolean success = FileUtils.removeDirectory(new File(FileUtils.logs_root));
 				FileUtils.logToFile("Cleaning logs was a " + (success ? "success" : "failure") + ".");
 			}
 		});

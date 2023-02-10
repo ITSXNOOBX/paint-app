@@ -7,6 +7,9 @@ import java.io.RandomAccessFile;
 import java.nio.channels.FileChannel;
 import java.nio.channels.FileLock;
 
+/*
+ * @version 1.1.3
+ */
 public class SingleInstanceUtils {
     static File file;
     static FileChannel fileChannel;

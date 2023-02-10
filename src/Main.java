@@ -1,5 +1,7 @@
 import java.io.File;
 
+import auth.AuthUtils;
+import gui.AuthForm;
 import gui.MainForm;
 import gui.RegisterTeam;
 import person.coach;
@@ -20,67 +22,83 @@ import utils.SingleInstanceUtils;
  */
 public class Main {
 
-	
-    public static Boolean first_run = false;
-    public static Boolean isrunning = false;
+	public static Boolean first_run = false;
+	public static Boolean isrunning = false;
+
 	/**
 	 * @param args
 	 */
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-       @SuppressWarnings("unused")
+		@SuppressWarnings("unused")
 		Boolean developer = false;
-       	isrunning = SingleInstanceUtils.checkIfAlreadyRunning();
+		isrunning = SingleInstanceUtils.checkIfAlreadyRunning();
 
-        if(args.length != 0 && args[0].equals("developer")) {
+		if (args.length != 0 && args[0].equals("developer")) {
 //            System.out.println("Running app as developer mode!");
-            FileUtils.logToFile("Developer parameter found, running app as developer.");
-            developer = true;
-            isrunning = false;
-        }
-        
-        if (isrunning) {
-        	NotifyUtils.error("Another instance is running. Closing automatically this one.", "ERROR_SINGLE_INSTANCE_APP");
-        	System.exit(1152); // ERROR_SINGLE_INSTANCE_APP, 1152 (0x480) // https://learn.microsoft.com/en-us/windows/win32/debug/system-error-codes--1000-1299-#ERROR_SINGLE_INSTANCE_APP
-        }
-        
+			FileUtils.logToFile("Developer parameter found, running app as developer.");
+			developer = true;
+			isrunning = false;
+		}
 
-        File app_folder = new File(FileUtils.root);
-        if (!app_folder.isDirectory()){
-            app_folder.mkdirs();
-            new File(FileUtils.logs_root).mkdirs();
-            new File(FileUtils.cache_root).mkdirs();
-            first_run = true;
-            FileUtils.logToFile("Folders created successfully.");
-        }
-        
-        if (DataUtils.read()) {
-        	 FileUtils.logToFile("Successfully read all the data stored.");
-        } else {
-        	FileUtils.logToFile("Failed to read data from previous sessions.");
-        }
+		if (isrunning) {
+			NotifyUtils.error("Another instance is running. Closing automatically this one.",
+					"ERROR_SINGLE_INSTANCE_APP");
+			System.exit(1152); // ERROR_SINGLE_INSTANCE_APP, 1152 (0x480) //
+								// https://learn.microsoft.com/en-us/windows/win32/debug/system-error-codes--1000-1299-#ERROR_SINGLE_INSTANCE_APP
+		}
+
+		File app_folder = new File(FileUtils.root);
+		if (!app_folder.isDirectory()) {
+			app_folder.mkdirs();
+			new File(FileUtils.logs_root).mkdirs();
+			new File(FileUtils.cache_root).mkdirs();
+			new File(FileUtils.auth_root).mkdirs();
+			first_run = true;
+			FileUtils.logToFile("Folders created successfully.");
+		}
+
+		if (AuthUtils.read()) {
+			FileUtils.logToFile("Successfully read user data.");
+		} else {
+			FileUtils.logToFile("Failed to read user data.");
+		}
 		
-		MainForm.main(args);
-//		RegisterTeam.main(args);
-        FileUtils.logToFile("Program succesfully executed.");   
-        
-        Runtime.getRuntime().addShutdownHook(new Thread() {
-            @Override
-            public void run() {
-                // place your code here
-            	
-            	FileUtils.logToFile("Program is closing, running pre closing actions");
-            	SingleInstanceUtils.unlockFile();
-            	if(isrunning || MainForm.should_not_save) return;
-            	
-                if (DataUtils.write()) {
-               	 	FileUtils.logToFile("Successfully saved all data in this session.");
-                } else {
-                	FileUtils.logToFile("Could not store all the data from this session.");
-                }
-            }
+		AuthForm.main(args);
 
-        });
+		while (!AuthForm.success) {
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {}
+		};
+
+		if (DataUtils.read()) {
+			FileUtils.logToFile("Successfully read all the data stored.");
+		} else {
+			FileUtils.logToFile("Failed to read data from previous sessions.");
+		}
+
+		MainForm.main(args);
+		FileUtils.logToFile("Program succesfully executed.");
+
+		Runtime.getRuntime().addShutdownHook(new Thread() {
+			@Override
+			public void run() {
+				// place your code here
+
+				FileUtils.logToFile("Program is closing, running pre closing actions");
+				SingleInstanceUtils.unlockFile();
+				if (isrunning || MainForm.should_not_save)
+					return;
+
+				if (DataUtils.write()) {
+					FileUtils.logToFile("Successfully saved all data in this session.");
+				} else {
+					FileUtils.logToFile("Could not store all the data from this session.");
+				}
+			}
+
+		});
 	}
 
 }

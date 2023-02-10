@@ -343,11 +343,11 @@ public class RegisterPlayer extends JFrame {
 						NotifyUtils.error("The player has too many surnames", "User Error!");
 	                    FileUtils.logToFile("User Error!, The player has too many surnames");
 	                    return;
-					} else if (pAge > 100) {
+					} else if (pAge > 100 || pAge < 15) {
 						NotifyUtils.error("The player is too old to play in this league.", "User Error!");
 	                    FileUtils.logToFile("User Error!, The player is too old to play in this league.");
 	                    return;
-					} else if (pNumber > 100) {
+					} else if (pNumber > 10 || pNumber < 0) {
 						NotifyUtils.error("The player is too old to play in this league.", "User Error!");
 	                    FileUtils.logToFile("User Error!, The player is too old to play in this league.");
 	                    return;

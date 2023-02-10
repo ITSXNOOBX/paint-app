@@ -3,6 +3,10 @@ package person;
 import java.io.Serializable;
 import java.util.Objects;
 
+/*
+ * @author t5
+ * @version 1.0.5
+ */
 public class person implements Serializable {
     private String name;
     private String[] surnames;

@@ -286,7 +286,7 @@ public class RegisterCoach extends JFrame {
 	                    FileUtils.logToFile("User Error!, The coach name is invalid, please write at least 3.");
 	                    return;
 					} else if (pSurname.length > 4) {
-						NotifyUtils.error("The coach has too many surnames", "User Error!");
+						NotifyUtils.error("The coach has too many surnames.", "User Error!");
 	                    FileUtils.logToFile("User Error!, he coach has too many surnames");
 	                    return;
 					} else if (pNan.length() < 9) {
@@ -294,8 +294,8 @@ public class RegisterCoach extends JFrame {
 	                    FileUtils.logToFile("User Error!, The coach has too many surnames");
 	                    return;
 					} else if (pAge > 100) {
-						NotifyUtils.error("The coach is too old to play in this league.", "User Error!");
-	                    FileUtils.logToFile("User Error!, The coach is too old to play in this league.");
+						NotifyUtils.error("The coach is too old/joung to play in this league.", "User Error!");
+	                    FileUtils.logToFile("User Error!, The coach is too old/joung to play in this league.");
 	                    return;
 					}
 

@@ -6,6 +6,9 @@ import matches.match;
 import person.*;
 import teams.team;
 
+/*
+ * @version 1.0.6
+ */
 public class DataUtils {
 	public static ArrayList<player> players = new ArrayList<player>();
 	public static ArrayList<coach> coaches = new ArrayList<coach>();

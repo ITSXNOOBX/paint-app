@@ -4,6 +4,9 @@ import java.awt.*;
 import java.awt.geom.*;
 import javax.swing.*;
 
+/*
+ * @version 1.0.9
+ */
 @SuppressWarnings("serial")
 public class RoundedButton extends JButton {
   public RoundedButton(String label) {

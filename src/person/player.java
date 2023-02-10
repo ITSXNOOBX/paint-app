@@ -3,6 +3,11 @@ package person;
 import java.io.Serializable;
 import java.util.Objects;
 
+/*
+ * @author t5
+ * @version 1.0.5
+ * @see person class
+ */
 public class player extends person implements Serializable {
     private Integer team_number;
     private Double points;

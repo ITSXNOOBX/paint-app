@@ -5,6 +5,11 @@ import java.util.ArrayList;
 
 import teams.team;
 
+/*
+ * @author t5
+ * @version 1.0.4
+ * @see team class
+ */
 public class match implements Serializable {
 		private team local;
 		private team outsider;

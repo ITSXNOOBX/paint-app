@@ -10,8 +10,12 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 
+import auth.user;
 import matches.match;
 
+/*
+ * @version 1.0.5
+ */
 public class FileUtils {
 
     String formattedDate = new SimpleDateFormat("HH:mm:ss").format(new Date());
@@ -19,12 +23,15 @@ public class FileUtils {
     public static final String root = appdata + "/paint-app/";
     public static final String logs_root = root + "logs/";
     public static final String cache_root = root + "cache/";
+    public static final String auth_root = root + "auth/";
     
     public static final String path_log = logs_root + new SimpleDateFormat("dd-MM-yyyy_HH-mm-ss").format(new Date()) + "_paint-app.log";
     public static final String path_teams = root + "teams_data.bin";
     public static final String path_players = root + "players_data.bin";
     public static final String path_matches = root + "match_data.bin";
     public static final String path_coach = root + "coach_data.bin";
+    
+    public static final String path_users = auth_root + "usr";
 
 
     public static boolean logToFile(String text, Boolean... supressConsole) {   
@@ -46,17 +53,69 @@ public class FileUtils {
 		}
         return true;
     }
+    
+    public static boolean writeToFile(String path, String text, Boolean append) {   
+    	if (path == null) path = cache_root + "data";
+    	if (text == null) return false;
+		try {
+			PrintWriter opened = new PrintWriter(new FileWriter(path, append));
+			
+			opened.println(text);
+			
+			opened.close();
+		} catch (IOException ioe) {
+//			ioe.printStackTrace();
+			return false;
+		}
+        return true;
+    }
+    
+    public static String readFromFile(String path) {   
+    	if (path == null) return null;
+    	String data = "";
+        try (
+    		BufferedReader br = new BufferedReader(new FileReader(path))) {
+
+        	String line = "";
+        	while ((line = br.readLine()) != null) {
+        		data += line;
+        	};
+        } catch (IOException e) {
+//            e.printStackTrace();
+        	return null;
+        }
+        return data;
+    }
+    
+    public static byte[] readBytesFromFile(String path) {   
+    	if (path == null) return null;
+    	byte[] data = null;
+    	try (
+			FileInputStream file = new FileInputStream(new File(path))) {
+    		
+    		data = file.readAllBytes();
+    		
+    	} catch (IOException e) {
+//            e.printStackTrace();
+    		return null;
+    	}
+    	return data;
+    }
+    
     public static Boolean clearDirectory(File dir) {
+    	Boolean status = true;
+    	if (dir.listFiles() == null) return false;
     	for(File file : dir.listFiles()) 
     	    if (!file.isDirectory()) 
-    	        if(!file.delete()) return false;
-    	return true;
+    	        status = file.delete();
+    	return status;
     }
     public static Boolean removeDirectory(File dir) {
     	Boolean status = true;
+    	if (dir.listFiles() == null) return false;
     	for(File file : dir.listFiles()) 
-    		
     		if(!file.delete()) status = false;
+    		
     	return status;
     }
     
@@ -73,6 +132,8 @@ public class FileUtils {
         	path = path_matches;
         } else if(obj.get(0) instanceof team) {
             path = path_teams;
+        } else if(obj.get(0) instanceof user) {
+        	path = path_users;
         } else {
         	status = false;
         }
@@ -104,6 +165,8 @@ public class FileUtils {
         	path = path_matches;
         } else if(obj_type.equals("team")) {
             path = path_teams;
+        } else if(obj_type.equals("user")) {
+        	path = path_users;
         } else {
         	return null;
         }

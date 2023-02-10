@@ -7,6 +7,9 @@ import java.awt.Toolkit;
 import java.awt.TrayIcon;
 import java.awt.TrayIcon.MessageType;
 
+/*
+ * @version 1.1.0
+ */
 public class NotifyUtils {
 	private static Boolean supported = SystemTray.isSupported();
 	private static Image image = Toolkit.getDefaultToolkit().getImage(NotifyUtils.class.getResource("/assets/painballogo.png"));
