@@ -49,6 +49,7 @@ import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.event.ListSelectionListener;
 
+import auth.AuthUtils;
 import matches.match;
 import matches.score;
 import person.coach;
@@ -192,7 +193,7 @@ public class MainForm extends JFrame {
 //		 // homeButton.setBorder(new RoundedBorder(5));
 //		 homeButton.setBounds(10, 162, 161, 30);
 //		 navPanel.add(homeButton);
-		JButton homeButton = new JButton("Home");
+		JButton homeButton = new JButton("Etxea"); // Home
 		homeButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				updateCurrentWindow(0);
@@ -204,7 +205,7 @@ public class MainForm extends JFrame {
 		navPanel.add(homeButton);
 		windowButtons.add(homeButton);
 
-		JButton btnLeague = new JButton("League");
+		JButton btnLeague = new JButton("Liga"); // League
 		btnLeague.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				updateCurrentWindow(1);
@@ -216,7 +217,7 @@ public class MainForm extends JFrame {
 		navPanel.add(btnLeague);
 		windowButtons.add(btnLeague);
 
-		JButton btnSetup = new JButton("Setup");
+		JButton btnSetup = new JButton("Konfigurazioa"); // Setup
 		btnSetup.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				updateCurrentWindow(2);
@@ -228,7 +229,7 @@ public class MainForm extends JFrame {
 		navPanel.add(btnSetup);
 		windowButtons.add(btnSetup);
 
-		JButton settingsButton = new JButton("Settings");
+		JButton settingsButton = new JButton("Aldaketak"); // Settings
 		settingsButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				updateCurrentWindow(3);
@@ -322,13 +323,13 @@ public class MainForm extends JFrame {
 		homePanelWindow.add(homeCoachTextfield);
 		homeCoachTextfield.setColumns(10);
 
-		JLabel lblTeamSeparator = new JLabel("Teams");
+		JLabel lblTeamSeparator = new JLabel("Taldeak"); // Teams
 		lblTeamSeparator.setForeground(new Color(255, 255, 255));
 		lblTeamSeparator.setFont(new Font("Arial", Font.BOLD, 15));
 		lblTeamSeparator.setBounds(10, 96, 174, 13);
 		homePanelWindow.add(lblTeamSeparator);
 
-		JLabel lblPlayerSeparator = new JLabel("Players");
+		JLabel lblPlayerSeparator = new JLabel("Jokalariak"); // Players
 		lblPlayerSeparator.setForeground(Color.WHITE);
 		lblPlayerSeparator.setFont(new Font("Arial", Font.BOLD, 15));
 		lblPlayerSeparator.setBounds(200, 96, 160, 13);
@@ -344,7 +345,7 @@ public class MainForm extends JFrame {
 		playerSeparator.setBounds(200, 113, 160, 1);
 		homePanelWindow.add(playerSeparator);
 
-		JLabel lblCoach = new JLabel("Coach:");
+		JLabel lblCoach = new JLabel("Entrenatzailea:"); // Coach
 		lblCoach.setForeground(Color.WHITE);
 		lblCoach.setFont(new Font("Arial", Font.BOLD, 13));
 		lblCoach.setBounds(370, 146, 83, 20);
@@ -368,13 +369,13 @@ public class MainForm extends JFrame {
 		homeClasificationTextfield.setBounds(465, 209, 50, 20);
 		homePanelWindow.add(homeClasificationTextfield);
 
-		JLabel homeClassificationLbl = new JLabel("Classification:");
+		JLabel homeClassificationLbl = new JLabel("Klasifikasioa:"); // Classification:
 		homeClassificationLbl.setForeground(Color.WHITE);
 		homeClassificationLbl.setFont(new Font("Arial", Font.BOLD, 13));
 		homeClassificationLbl.setBounds(370, 208, 96, 20);
 		homePanelWindow.add(homeClassificationLbl);
 
-		JLabel lblTeamData = new JLabel("Team Data");
+		JLabel lblTeamData = new JLabel("Talde Datuak"); //Team Data
 		lblTeamData.setForeground(Color.WHITE);
 		lblTeamData.setFont(new Font("Arial", Font.BOLD, 15));
 		lblTeamData.setBounds(371, 119, 174, 13);
@@ -391,7 +392,7 @@ public class MainForm extends JFrame {
 		homePlayerNameTextbox.setBounds(465, 267, 100, 20);
 		homePanelWindow.add(homePlayerNameTextbox);
 
-		JLabel homePlayerNameLbl = new JLabel("Name:");
+		JLabel homePlayerNameLbl = new JLabel("Izena:"); // Name:
 		homePlayerNameLbl.setForeground(Color.WHITE);
 		homePlayerNameLbl.setFont(new Font("Arial", Font.BOLD, 13));
 		homePlayerNameLbl.setBounds(370, 266, 83, 20);
@@ -403,7 +404,7 @@ public class MainForm extends JFrame {
 		homePPointsTextbox.setBounds(465, 328, 50, 20);
 		homePanelWindow.add(homePPointsTextbox);
 
-		JLabel homePointsLbl_1 = new JLabel("Points:");
+		JLabel homePointsLbl_1 = new JLabel("Putuak:"); // Points
 		homePointsLbl_1.setForeground(Color.WHITE);
 		homePointsLbl_1.setFont(new Font("Arial", Font.BOLD, 13));
 		homePointsLbl_1.setBounds(370, 328, 83, 20);
@@ -415,13 +416,13 @@ public class MainForm extends JFrame {
 		homeHeadlineTexfield.setBounds(465, 358, 50, 20);
 		homePanelWindow.add(homeHeadlineTexfield);
 
-		JLabel homeHeadlineLbl = new JLabel("Headline:");
+		JLabel homeHeadlineLbl = new JLabel("Titularra:"); // Headline:
 		homeHeadlineLbl.setForeground(Color.WHITE);
 		homeHeadlineLbl.setFont(new Font("Arial", Font.BOLD, 13));
 		homeHeadlineLbl.setBounds(370, 357, 96, 20);
 		homePanelWindow.add(homeHeadlineLbl);
 
-		JLabel homePlayerDataLbl = new JLabel("Player Data");
+		JLabel homePlayerDataLbl = new JLabel("Jokalari Datuak"); // Player Data
 		homePlayerDataLbl.setForeground(Color.WHITE);
 		homePlayerDataLbl.setFont(new Font("Arial", Font.BOLD, 15));
 		homePlayerDataLbl.setBounds(371, 239, 174, 13);
@@ -432,7 +433,7 @@ public class MainForm extends JFrame {
 		homePlayerDataSeparator.setBounds(371, 256, 180, 1);
 		homePanelWindow.add(homePlayerDataSeparator);
 
-		JLabel homeAgeLbl = new JLabel("Age:");
+		JLabel homeAgeLbl = new JLabel("Adina:"); // Age:
 		homeAgeLbl.setForeground(Color.WHITE);
 		homeAgeLbl.setFont(new Font("Arial", Font.BOLD, 13));
 		homeAgeLbl.setBounds(370, 297, 96, 20);
@@ -449,7 +450,7 @@ public class MainForm extends JFrame {
 		homeSeparator.setBounds(20, 60, 540, 1);
 		homePanelWindow.add(homeSeparator);
 
-		JLabel lblNewLabel = new JLabel("Welcome back");
+		JLabel lblNewLabel = new JLabel("Ongi etorri " + (AuthUtils.logged_user != null ? AuthUtils.logged_user.getUsername() :"")); // Welcome back
 		lblNewLabel.setFont(new Font("Arial", Font.BOLD, 25));
 		lblNewLabel.setForeground(new Color(255, 255, 255));
 		lblNewLabel.setBounds(178, 10, 198, 40);
@@ -475,7 +476,7 @@ public class MainForm extends JFrame {
 		tabbedPane.setBackgroundAt(0, new Color(0, 122, 204));
 		matchesSubPanel.setLayout(null);
 
-		JLabel leagueLocalTeamlbl = new JLabel("Local Team | L");
+		JLabel leagueLocalTeamlbl = new JLabel("Talde Lokala | L"); // Local Team | L
 		leagueLocalTeamlbl.setForeground(Color.WHITE);
 		leagueLocalTeamlbl.setFont(new Font("Arial", Font.BOLD, 15));
 		leagueLocalTeamlbl.setBounds(10, 10, 180, 13);
@@ -486,7 +487,7 @@ public class MainForm extends JFrame {
 		legueLocalTeamSeparator.setBounds(10, 27, 180, 1);
 		matchesSubPanel.add(legueLocalTeamSeparator);
 
-		JLabel leagueOutsiderTeamlbl = new JLabel("Outsider Team | O");
+		JLabel leagueOutsiderTeamlbl = new JLabel("Kanpoko Taldea | O"); // Outsider Team | O
 		leagueOutsiderTeamlbl.setForeground(Color.WHITE);
 		leagueOutsiderTeamlbl.setFont(new Font("Arial", Font.BOLD, 15));
 		leagueOutsiderTeamlbl.setBounds(390, 10, 174, 13);
@@ -522,7 +523,7 @@ public class MainForm extends JFrame {
 		leagueLocalTeamList.setBounds(10, 45, 180, 21);
 		matchesSubPanel.add(leagueLocalTeamList);
 
-		JLabel leagueLocalTeamSelectedPlayer = new JLabel("Select Player");
+		JLabel leagueLocalTeamSelectedPlayer = new JLabel("Aukeratu"); // Select Player
 		leagueLocalTeamSelectedPlayer.setHorizontalAlignment(SwingConstants.RIGHT);
 		leagueLocalTeamSelectedPlayer.setForeground(Color.WHITE);
 		leagueLocalTeamSelectedPlayer.setFont(new Font("Arial", Font.BOLD, 15));
@@ -539,7 +540,7 @@ public class MainForm extends JFrame {
 				player selectedLocalP = (player) leagueLocalPlayerList.getSelectedValue();
 				
 				if (selectedLocalT == null || selectedLocalP == null) {
-					leagueLocalTeamSelectedPlayer.setText("Select Player");
+					leagueLocalTeamSelectedPlayer.setText("Aukeratu"); // Select Player
 					leagueLocalPlayerPoints.setText("0");
 					return;
 				};
@@ -553,13 +554,13 @@ public class MainForm extends JFrame {
 		matchesSubPanel.add(leagueLocalPlayerList);
 		leagueLocalPlayerList.setModel(leagueLocalPlayerListData);
 
-		JLabel leagueLocalTeamSelectedlbl = new JLabel("Player:");
+		JLabel leagueLocalTeamSelectedlbl = new JLabel("Jokalaria:"); // Player // 
 		leagueLocalTeamSelectedlbl.setForeground(Color.WHITE);
 		leagueLocalTeamSelectedlbl.setFont(new Font("Arial", Font.BOLD, 15));
 		leagueLocalTeamSelectedlbl.setBounds(10, 327, 180, 15);
 		matchesSubPanel.add(leagueLocalTeamSelectedlbl);
 
-		JLabel leagueLocalPointslbl = new JLabel("Points Made:");
+		JLabel leagueLocalPointslbl = new JLabel("Puntuak:"); // Points Made
 		leagueLocalPointslbl.setForeground(Color.WHITE);
 		leagueLocalPointslbl.setFont(new Font("Arial", Font.BOLD, 15));
 		leagueLocalPointslbl.setBounds(10, 350, 180, 15);
@@ -677,13 +678,13 @@ public class MainForm extends JFrame {
 		matchesSubPanel.add(leagueOutsiderPlayerList);
 		leagueOutsiderPlayerList.setModel(leagueOutsiderPlayerListData);
 
-		JLabel leagueOutsiderTeamSelectedlbl = new JLabel("Player:");
+		JLabel leagueOutsiderTeamSelectedlbl = new JLabel("Jokalaria:"); // Player
 		leagueOutsiderTeamSelectedlbl.setForeground(Color.WHITE);
 		leagueOutsiderTeamSelectedlbl.setFont(new Font("Arial", Font.BOLD, 15));
 		leagueOutsiderTeamSelectedlbl.setBounds(384, 327, 180, 15);
 		matchesSubPanel.add(leagueOutsiderTeamSelectedlbl);
 
-		JLabel leagueOutsiderPointslbl = new JLabel("Points Made:");
+		JLabel leagueOutsiderPointslbl = new JLabel("Puntuak:"); // Points Made:
 		leagueOutsiderPointslbl.setForeground(Color.WHITE);
 		leagueOutsiderPointslbl.setFont(new Font("Arial", Font.BOLD, 15));
 		leagueOutsiderPointslbl.setBounds(384, 350, 180, 15);
@@ -713,7 +714,7 @@ public class MainForm extends JFrame {
 		leagueOutsiderPlayerPoints.setBounds(499, 348, 65, 15);
 		matchesSubPanel.add(leagueOutsiderPlayerPoints);
 
-		leagueOutsiderSetPlayerPoints = new JButton("Save Points");
+		leagueOutsiderSetPlayerPoints = new JButton("Gorde Puntuak"); //Save Points 
 		leagueOutsiderSetPlayerPoints.setForeground(new Color(255, 255, 255));
 		leagueOutsiderSetPlayerPoints.setBackground(new Color(70, 70, 75));
 		leagueOutsiderSetPlayerPoints.addActionListener(new ActionListener() {
@@ -777,18 +778,18 @@ public class MainForm extends JFrame {
 		leagueCancelMatch.setEnabled(false);
 		leagueCancelMatch.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Integer option = JOptionPane.showConfirmDialog(null, "Are your sure you want to cancel this match? The scores will be lost!"); // 0 = yes, 1 = no, 2 = cancel
+				Integer option = JOptionPane.showConfirmDialog(null, "Ziur partida hau bertan behera utzi nahi duzula? Puntuazioa galduko da!"); // 0 = yes, 1 = no, 2 = cancel //Are your sure you want to cancel this match? The scores will be lost!
 				FileUtils.logToFile("Match cancel option has been triggered, user has " + (option == 0 ? "allowed" : option == 1 ? "denied" : "canceled") + " the operation.");
 				if (option != 0) return;
 				
 				leagueLocalTeamList.setSelectedIndex(-1);
 				leagueOutsiderTeamList.setSelectedIndex(-1);
 				
-				leagueLocalTeamSelectedPlayer.setText("Select Player");
+				leagueLocalTeamSelectedPlayer.setText("Aukeratu"); // Select Player
 				leagueLocalPlayerPoints.setText("0");
 				leagueLocalPlayerListData.clear();
 				
-				leagueOutsiderTeamSelectedPlayer.setText("Select Player");
+				leagueOutsiderTeamSelectedPlayer.setText("Aukeratu"); // Select Player
 				leagueOutsiderPlayerPoints.setText("0");
 				leagueOutsiderPlayerListData.clear();
 				
@@ -799,7 +800,7 @@ public class MainForm extends JFrame {
 				FileUtils.logToFile("User has deleted match, match has been canceled!");
 			}
 		});
-		leagueCancelMatch.setToolTipText("Cancel Match");
+		leagueCancelMatch.setToolTipText("Utzi partida"); // Cancel Match
 		leagueCancelMatch.setIcon(new ImageIcon(MainForm.class.getResource("/assets/icons8-close-48.png")));
 		leagueCancelMatch.setBounds(200, 375, 85, 38);
 		matchesSubPanel.add(leagueCancelMatch);
@@ -810,7 +811,7 @@ public class MainForm extends JFrame {
 		leagueSaveMatch.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				Integer option = JOptionPane.showConfirmDialog(null, "Are your sure the match is finished, after playing it you wont be able to edit/remove it!"); // 0 = yes, 1 = no, 2 = cancel
+				Integer option = JOptionPane.showConfirmDialog(null, "Ziur zaude partida amaitu dela, jokatu ondoren ezingo duzula editatu/kendu!"); // 0 = yes, 1 = no, 2 = cancel // Are your sure the match is finished, after playing it you wont be able to edit/remove it!
 				FileUtils.logToFile("Match confirm option has been triggered, user has " + (option == 0 ? "allowed" : option == 1 ? "denied" : "canceled") + " the operation.");
 				if (option != 0) return;
 				
@@ -843,11 +844,11 @@ public class MainForm extends JFrame {
 				leagueLocalTeamList.setSelectedIndex(-1);
 				leagueOutsiderTeamList.setSelectedIndex(-1);
 				
-				leagueLocalTeamSelectedPlayer.setText("Select Player");
+				leagueLocalTeamSelectedPlayer.setText("Aukeratu"); // Select Player
 				leagueLocalPlayerPoints.setText("0");
 				leagueLocalPlayerListData.clear();
 				
-				leagueOutsiderTeamSelectedPlayer.setText("Select Player");
+				leagueOutsiderTeamSelectedPlayer.setText("Aukeratu"); // Select Player
 				leagueOutsiderPlayerPoints.setText("0");
 				leagueOutsiderPlayerListData.clear();
 				
@@ -868,7 +869,7 @@ public class MainForm extends JFrame {
 		tabbedPane.setBackgroundAt(1, new Color(0, 122, 204));
 		leagueClassification.setLayout(null);
 
-		JLabel leagueTeamClasificationlbl = new JLabel("Team Classification");
+		JLabel leagueTeamClasificationlbl = new JLabel("Talde Klasifikazioa"); // Team Classification
 		leagueTeamClasificationlbl.setForeground(Color.WHITE);
 		leagueTeamClasificationlbl.setFont(new Font("Arial", Font.BOLD, 15));
 		leagueTeamClasificationlbl.setBounds(10, 10, 180, 13);
@@ -879,7 +880,7 @@ public class MainForm extends JFrame {
 		legueLocalTeamSeparator_2.setBounds(10, 27, 555, 1);
 		leagueClassification.add(legueLocalTeamSeparator_2);
 
-		JLabel leagueMatchListlbl = new JLabel("Match List");
+		JLabel leagueMatchListlbl = new JLabel("Partida Lista"); // Match List
 		leagueMatchListlbl.setForeground(Color.WHITE);
 		leagueMatchListlbl.setFont(new Font("Arial", Font.BOLD, 15));
 		leagueMatchListlbl.setBounds(10, 216, 180, 13);
@@ -921,7 +922,7 @@ public class MainForm extends JFrame {
 		seutpTeamSep.setBounds(20, 42, 540, 1);
 		setupLeagueWindow.add(seutpTeamSep);
 
-		JLabel setupTeamLbl = new JLabel("Teams");
+		JLabel setupTeamLbl = new JLabel("Taldeak"); // Teams
 		setupTeamLbl.setForeground(Color.WHITE);
 		setupTeamLbl.setFont(new Font("Arial", Font.BOLD, 15));
 		setupTeamLbl.setBounds(20, 24, 174, 13);
@@ -932,7 +933,7 @@ public class MainForm extends JFrame {
 		seutpPlayerSep.setBounds(20, 178, 540, 1);
 		setupLeagueWindow.add(seutpPlayerSep);
 
-		JLabel setupPlayerLbl = new JLabel("Players");
+		JLabel setupPlayerLbl = new JLabel("Jokalariak"); // Players
 		setupPlayerLbl.setForeground(Color.WHITE);
 		setupPlayerLbl.setFont(new Font("Arial", Font.BOLD, 15));
 		setupPlayerLbl.setBounds(20, 160, 174, 13);
@@ -962,14 +963,14 @@ public class MainForm extends JFrame {
 				if (selected != null && hasCoach) {
 					setupSelectCoach.setText(selected.getCoach().getName());
 				} else {
-					setupSelectCoach.setText("No Coach.");
+					setupSelectCoach.setText("Entrnatzailerik ez"); // No Coach.
 				}
 			}
 		});
 		setupSelectTeam.setBounds(295, 53, 265, 24);
 		setupLeagueWindow.add(setupSelectTeam);
 
-		JLabel lblSelectTeam = new JLabel("Select Team");
+		JLabel lblSelectTeam = new JLabel("Aukeratu"); // Select Player
 		lblSelectTeam.setForeground(Color.WHITE);
 		lblSelectTeam.setFont(new Font("Arial", Font.PLAIN, 15));
 		lblSelectTeam.setBounds(20, 53, 174, 24);
@@ -980,13 +981,13 @@ public class MainForm extends JFrame {
 		seutpCoachSep.setBounds(20, 314, 540, 1);
 		setupLeagueWindow.add(seutpCoachSep);
 
-		JLabel setupCoachSec = new JLabel("Coach");
+		JLabel setupCoachSec = new JLabel("Entrenatzailea"); // Coach
 		setupCoachSec.setForeground(Color.WHITE);
 		setupCoachSec.setFont(new Font("Arial", Font.BOLD, 15));
 		setupCoachSec.setBounds(20, 296, 174, 13);
 		setupLeagueWindow.add(setupCoachSec);
 
-		JButton setupCreateTeam = new JButton("Create");
+		JButton setupCreateTeam = new JButton("Sortu"); // Create
 		setupCreateTeam.setForeground(new Color(255, 255, 255));
 		setupCreateTeam.setBackground(new Color(70, 70, 75));
 		setupCreateTeam.addActionListener(new ActionListener() {
@@ -1001,7 +1002,7 @@ public class MainForm extends JFrame {
 		windowButtons.add(setupCreateTeam);
 
 
-		JLabel setupCreateTeamlbl = new JLabel("Create Team");
+		JLabel setupCreateTeamlbl = new JLabel("Sortu Taldea"); // Create Team
 		setupCreateTeamlbl.setForeground(Color.WHITE);
 		setupCreateTeamlbl.setFont(new Font("Arial", Font.PLAIN, 15));
 		setupCreateTeamlbl.setBounds(20, 90, 174, 24);
@@ -1011,13 +1012,13 @@ public class MainForm extends JFrame {
 		setupSelectPlayer.setBounds(295, 189, 265, 24);
 		setupLeagueWindow.add(setupSelectPlayer);
 
-		JLabel setupSelectPlayerLbl = new JLabel("Select Player");
+		JLabel setupSelectPlayerLbl = new JLabel("Auketatu Jokalaria"); // Select Player
 		setupSelectPlayerLbl.setForeground(Color.WHITE);
 		setupSelectPlayerLbl.setFont(new Font("Arial", Font.PLAIN, 15));
 		setupSelectPlayerLbl.setBounds(20, 189, 174, 24);
 		setupLeagueWindow.add(setupSelectPlayerLbl);
 
-		setupDeleteTeam = new JButton("Delete");
+		setupDeleteTeam = new JButton("Ezabatu"); // Delete
 		setupDeleteTeam.setForeground(new Color(255, 255, 255));
 		setupDeleteTeam.setBackground(new Color(70, 70, 75));
 		setupDeleteTeam.addActionListener(new ActionListener() {
@@ -1054,19 +1055,19 @@ public class MainForm extends JFrame {
 		windowButtons.add(setupDeleteTeam);
 
 
-		JLabel setupDeleteTeamlbl = new JLabel("Delete Team");
+		JLabel setupDeleteTeamlbl = new JLabel("Ezabatu Taldea"); // Delete Team
 		setupDeleteTeamlbl.setForeground(Color.WHITE);
 		setupDeleteTeamlbl.setFont(new Font("Arial", Font.PLAIN, 15));
 		setupDeleteTeamlbl.setBounds(20, 126, 174, 24);
 		setupLeagueWindow.add(setupDeleteTeamlbl);
 
-		JLabel setupCreatePlayerLbl = new JLabel("Create Player");
+		JLabel setupCreatePlayerLbl = new JLabel("Sortu Jokalaria"); // Create Player
 		setupCreatePlayerLbl.setForeground(Color.WHITE);
 		setupCreatePlayerLbl.setFont(new Font("Arial", Font.PLAIN, 15));
 		setupCreatePlayerLbl.setBounds(20, 226, 174, 24);
 		setupLeagueWindow.add(setupCreatePlayerLbl);
 
-		setupCreatePlayer = new JButton("Create");
+		setupCreatePlayer = new JButton("Sortu"); // Create
 		setupCreatePlayer.setBackground(new Color(70, 70, 75));
 		setupCreatePlayer.setForeground(new Color(255, 255, 255));
 		setupCreatePlayer.addActionListener(new ActionListener() {
@@ -1087,13 +1088,13 @@ public class MainForm extends JFrame {
 		setupLeagueWindow.add(setupCreatePlayer);
 		windowButtons.add(setupCreatePlayer);
 
-		JLabel setupDeletePlayerLbl = new JLabel("Delete Player");
+		JLabel setupDeletePlayerLbl = new JLabel("Ezabatu Jokalaria"); // Delete Player
 		setupDeletePlayerLbl.setForeground(Color.WHITE);
 		setupDeletePlayerLbl.setFont(new Font("Arial", Font.PLAIN, 15));
 		setupDeletePlayerLbl.setBounds(20, 262, 174, 24);
 		setupLeagueWindow.add(setupDeletePlayerLbl);
 
-		setupDeletePlayer = new JButton("Delete");
+		setupDeletePlayer = new JButton("Ezabatu"); // Delete
 		setupDeletePlayer.setForeground(new Color(255, 255, 255));
 		setupDeletePlayer.setBackground(new Color(70, 70, 75));
 		setupDeletePlayer.addActionListener(new ActionListener() {
@@ -1160,13 +1161,13 @@ public class MainForm extends JFrame {
 		windowButtons.add(setupDeletePlayer);
 
 
-		JLabel setupCreateCoachlbl = new JLabel("Create Coach");
+		JLabel setupCreateCoachlbl = new JLabel("Sortu Entrenatzailea"); // Create Coach 
 		setupCreateCoachlbl.setForeground(Color.WHITE);
 		setupCreateCoachlbl.setFont(new Font("Arial", Font.PLAIN, 15));
 		setupCreateCoachlbl.setBounds(20, 362, 174, 24);
 		setupLeagueWindow.add(setupCreateCoachlbl);
 
-		setupCreateCoach = new JButton("Create");
+		setupCreateCoach = new JButton("Sortu"); //Create
 		setupCreateCoach.setBackground(new Color(70, 70, 75));
 		setupCreateCoach.setForeground(new Color(255, 255, 255));
 		setupCreateCoach.addActionListener(new ActionListener() {
@@ -1185,13 +1186,13 @@ public class MainForm extends JFrame {
 		windowButtons.add(setupCreateCoach);
 
 
-		JLabel setupDeleteCoachlbl = new JLabel("Delete Coach");
+		JLabel setupDeleteCoachlbl = new JLabel("Ezabatu Entrenatzailea"); // Delete Coach
 		setupDeleteCoachlbl.setForeground(Color.WHITE);
 		setupDeleteCoachlbl.setFont(new Font("Arial", Font.PLAIN, 15));
 		setupDeleteCoachlbl.setBounds(20, 398, 174, 24);
 		setupLeagueWindow.add(setupDeleteCoachlbl);
 
-		setupDeleteCoach = new JButton("Delete");
+		setupDeleteCoach = new JButton("Ezabatu"); // Delete
 		setupDeleteCoach.setBackground(new Color(70, 70, 75));
 		setupDeleteCoach.setForeground(new Color(255, 255, 255));
 		setupDeleteCoach.addActionListener(new ActionListener() {
@@ -1222,7 +1223,7 @@ public class MainForm extends JFrame {
 		setupLeagueWindow.add(setupDeleteCoach);
 		windowButtons.add(setupDeleteCoach);
 
-		JLabel lblCoach_1 = new JLabel("Coach");
+		JLabel lblCoach_1 = new JLabel("Entrenatzailea"); // Coach
 		lblCoach_1.setForeground(Color.WHITE);
 		lblCoach_1.setFont(new Font("Arial", Font.PLAIN, 15));
 		lblCoach_1.setBounds(20, 325, 174, 24);
@@ -1257,27 +1258,27 @@ public class MainForm extends JFrame {
 		settingsRightSeparator.setBounds(310, 61, 260, 2);
 		settingsPanelWindow.add(settingsRightSeparator);
 
-		JLabel appLbl = new JLabel("App");
+		JLabel appLbl = new JLabel("Aplikazioa"); // App
 		appLbl.setForeground(new Color(255, 255, 255));
 		appLbl.setBackground(new Color(255, 255, 255));
 		appLbl.setFont(new Font("Arial", Font.BOLD, 20));
 		appLbl.setBounds(10, 10, 260, 38);
 		settingsPanelWindow.add(appLbl);
 
-		JLabel systemLbl = new JLabel("System");
+		JLabel systemLbl = new JLabel("Sistema"); // System
 		systemLbl.setForeground(Color.WHITE);
 		systemLbl.setFont(new Font("Arial", Font.BOLD, 20));
 		systemLbl.setBackground(Color.WHITE);
 		systemLbl.setBounds(310, 10, 260, 38);
 		settingsPanelWindow.add(systemLbl);
 
-		JLabel settingsSysCLogs = new JLabel("Clear Logs");
+		JLabel settingsSysCLogs = new JLabel("Ezabatu Erregistroak"); // Clear Logs
 		settingsSysCLogs.setForeground(new Color(255, 255, 255));
 		settingsSysCLogs.setFont(new Font("Arial", Font.BOLD, 12));
 		settingsSysCLogs.setBounds(310, 125, 145, 21);
 		settingsPanelWindow.add(settingsSysCLogs);
 
-		JButton settingsSysClearLogsBtn = new JButton("Clear");
+		JButton settingsSysClearLogsBtn = new JButton("Garbitu"); // Clear
 		settingsSysClearLogsBtn.setForeground(new Color(255, 255, 255));
 		settingsSysClearLogsBtn.setBackground(new Color(70, 70, 75));
 		settingsSysClearLogsBtn.addActionListener(new ActionListener() {
@@ -1291,13 +1292,13 @@ public class MainForm extends JFrame {
 		windowButtons.add(settingsSysClearLogsBtn);
 
 
-		JLabel settingsSysClearCache = new JLabel("Clear Cache");
+		JLabel settingsSysClearCache = new JLabel("Ezabatu Cache"); // Clear Cache
 		settingsSysClearCache.setForeground(Color.WHITE);
 		settingsSysClearCache.setFont(new Font("Arial", Font.BOLD, 12));
 		settingsSysClearCache.setBounds(310, 156, 145, 21);
 		settingsPanelWindow.add(settingsSysClearCache);
 
-		JButton settingsSysClearCacheBtn = new JButton("Clear");
+		JButton settingsSysClearCacheBtn = new JButton("Ezabatu"); // Clear
 		settingsSysClearCacheBtn.setForeground(new Color(255, 255, 255));
 		settingsSysClearCacheBtn.setBackground(new Color(70, 70, 75));
 		settingsSysClearCacheBtn.addActionListener(new ActionListener() {
@@ -1310,14 +1311,14 @@ public class MainForm extends JFrame {
 		settingsPanelWindow.add(settingsSysClearCacheBtn);
 		windowButtons.add(settingsSysClearCacheBtn);
 
-		JLabel settingsSysFRestoreLbl = new JLabel("Full Clean");
+		JLabel settingsSysFRestoreLbl = new JLabel("Garbi Osoa"); // Full Clean
 		settingsSysFRestoreLbl.setEnabled(false);
 		settingsSysFRestoreLbl.setForeground(Color.WHITE);
 		settingsSysFRestoreLbl.setFont(new Font("Arial", Font.BOLD, 12));
 		settingsSysFRestoreLbl.setBounds(311, 380, 145, 21);
 		settingsPanelWindow.add(settingsSysFRestoreLbl);
 
-		JButton settingsSysFullRestore = new JButton("Clean");
+		JButton settingsSysFullRestore = new JButton("Garbitu"); // Clean
 		settingsSysFullRestore.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Boolean success = FileUtils.removeDirectory(new File(FileUtils.root));
@@ -1332,14 +1333,14 @@ public class MainForm extends JFrame {
 		settingsPanelWindow.add(settingsSysFullRestore);
 		windowButtons.add(settingsSysFullRestore);
 
-		JLabel settingsSysUninstall = new JLabel("Uninstall");
+		JLabel settingsSysUninstall = new JLabel("Desinstalatu"); // Uninstall
 		settingsSysUninstall.setEnabled(false);
 		settingsSysUninstall.setForeground(Color.WHITE);
 		settingsSysUninstall.setFont(new Font("Arial", Font.BOLD, 12));
 		settingsSysUninstall.setBounds(311, 414, 145, 21);
 		settingsPanelWindow.add(settingsSysUninstall);
 
-		JButton settingsSysUninstallBtn = new JButton("Uninstall");
+		JButton settingsSysUninstallBtn = new JButton("Desinstalatu"); // Uninstall
 		settingsSysUninstallBtn.setForeground(new Color(255, 255, 255));
 		settingsSysUninstallBtn.setBackground(new Color(70, 70, 75));
 		settingsSysUninstallBtn.setEnabled(false);
@@ -1349,7 +1350,7 @@ public class MainForm extends JFrame {
 		windowButtons.add(settingsSysUninstallBtn);
 
 
-		JCheckBox chckbxNewCheckBox = new JCheckBox("Enable Risky Options");
+		JCheckBox chckbxNewCheckBox = new JCheckBox("Gaitu aukera arriskutsuak"); // Enable Risky Options
 		chckbxNewCheckBox.addItemListener(new ItemListener() {
 			@Override
 			public void itemStateChanged(ItemEvent e) {
@@ -1365,13 +1366,13 @@ public class MainForm extends JFrame {
 		chckbxNewCheckBox.setBounds(310, 346, 260, 21);
 		settingsPanelWindow.add(chckbxNewCheckBox);
 
-		JLabel settingsAppFolderlbl = new JLabel("App  Folder");
+		JLabel settingsAppFolderlbl = new JLabel("Aplikazioaren karpeta"); // App Folder
 		settingsAppFolderlbl.setForeground(Color.WHITE);
 		settingsAppFolderlbl.setFont(new Font("Arial", Font.BOLD, 12));
 		settingsAppFolderlbl.setBounds(310, 94, 145, 21);
 		settingsPanelWindow.add(settingsAppFolderlbl);
 
-		JButton settingsAppFolder = new JButton("Open");
+		JButton settingsAppFolder = new JButton("Ireki"); // Open
 		settingsAppFolder.setForeground(new Color(255, 255, 255));
 		settingsAppFolder.setBackground(new Color(70, 70, 75));
 		settingsAppFolder.addActionListener(new ActionListener() {
@@ -1389,13 +1390,13 @@ public class MainForm extends JFrame {
 		windowButtons.add(settingsAppFolder);
 
 		
-		JLabel settingsCloseWithoutSavinglbl = new JLabel("Close without saving");
+		JLabel settingsCloseWithoutSavinglbl = new JLabel("Itxi gorde gabe"); // Close without saving
 		settingsCloseWithoutSavinglbl.setForeground(Color.WHITE);
 		settingsCloseWithoutSavinglbl.setFont(new Font("Arial", Font.BOLD, 12));
 		settingsCloseWithoutSavinglbl.setBounds(10, 94, 145, 21);
 		settingsPanelWindow.add(settingsCloseWithoutSavinglbl);
 		
-		JButton settingsCloseWithoutSaving = new JButton("Close");
+		JButton settingsCloseWithoutSaving = new JButton("Itxi"); // Close
 		settingsCloseWithoutSaving.setForeground(new Color(255, 255, 255));
 		settingsCloseWithoutSaving.setBackground(new Color(70, 70, 75));
 		settingsCloseWithoutSaving.addActionListener(new ActionListener() {

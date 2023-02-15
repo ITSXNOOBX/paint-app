@@ -29,6 +29,7 @@ import java.awt.event.ActionEvent;
 public class AuthForm extends JFrame {
 
 	public static boolean success = false;
+	public static String username = "";
 	
 	private JPanel contentPane;
 	Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -113,10 +114,10 @@ public class AuthForm extends JFrame {
 		loginTitleLbl.setHorizontalAlignment(SwingConstants.CENTER);
 		loginTitleLbl.setForeground(new Color(255, 255, 255));
 		loginTitleLbl.setFont(new Font("Arial", Font.BOLD, 25));
-		loginTitleLbl.setBounds(0, 10, 350, 55);
+		loginTitleLbl.setBounds(0, 0, 350, 55);
 		loginPanel.add(loginTitleLbl);
 		
-		JLabel loginUsernamelbl = new JLabel("Username:");
+		JLabel loginUsernamelbl = new JLabel("Erabiltzailea:"); // Username:
 		loginUsernamelbl.setForeground(new Color(255, 255, 255));
 		loginUsernamelbl.setFont(new Font("Arial", Font.BOLD, 15));
 		loginUsernamelbl.setBounds(36, 223, 90, 25);
@@ -130,7 +131,7 @@ public class AuthForm extends JFrame {
 		loginPanel.add(loginUsername);
 		loginUsername.setColumns(10);
 		
-		JLabel loginPasswordlbl = new JLabel("Password:");
+		JLabel loginPasswordlbl = new JLabel("Pasahitza:"); // Password:
 		loginPasswordlbl.setForeground(Color.WHITE);
 		loginPasswordlbl.setFont(new Font("Arial", Font.BOLD, 15));
 		loginPasswordlbl.setBounds(36, 268, 90, 25);
@@ -144,7 +145,7 @@ public class AuthForm extends JFrame {
 		loginPassword.setBounds(135, 271, 186, 25);
 		loginPanel.add(loginPassword);
 		
-		JCheckBox rememberLoginCredentials = new JCheckBox("Remember Login");
+		JCheckBox rememberLoginCredentials = new JCheckBox("Gogoratu"); // Remember Login
 		rememberLoginCredentials.setSelected(true);
 		rememberLoginCredentials.setToolTipText("Remember login credentials for the next  time");
 		rememberLoginCredentials.setFont(new Font("Arial", Font.BOLD, 15));
@@ -153,7 +154,7 @@ public class AuthForm extends JFrame {
 		rememberLoginCredentials.setBounds(36, 315, 286, 21);
 		loginPanel.add(rememberLoginCredentials);
 		
-		JButton loginAuthenticate = new JButton("Authenticate");
+		JButton loginAuthenticate = new JButton("Sartu"); // Authenticate
 		loginAuthenticate.setFont(new Font("Arial", Font.BOLD, 16));
 		loginAuthenticate.setBackground(new Color(62, 62, 62));
 		loginAuthenticate.setForeground(new Color(255, 255, 255));
@@ -164,7 +165,7 @@ public class AuthForm extends JFrame {
 		JButton loginBannerButton = new JButton("");
 		loginBannerButton.setIcon(new ImageIcon(AuthForm.class.getResource("/assets/painballogo.png")));
 		loginBannerButton.setBackground(new Color(37, 37, 38));
-		loginBannerButton.setBounds(0, 65, 350, 111);
+		loginBannerButton.setBounds(0, 55, 350, 111);
 		loginPanel.add(loginBannerButton);
 		windowButtons.add(loginBannerButton);
 		
@@ -201,14 +202,14 @@ public class AuthForm extends JFrame {
 		loginPanel.add(gotoRegister);
 		windowButtons.add(gotoRegister);
 		
-		JLabel registerTitlelbl = new JLabel("Register");
+		JLabel registerTitlelbl = new JLabel("Sortu"); // Register
 		registerTitlelbl.setHorizontalAlignment(SwingConstants.CENTER);
 		registerTitlelbl.setForeground(Color.WHITE);
 		registerTitlelbl.setFont(new Font("Arial", Font.BOLD, 25));
 		registerTitlelbl.setBounds(0, 0, 350, 55);
 		registerPanel.add(registerTitlelbl);
 		
-		JLabel registerUsernamelbl = new JLabel("Username:");
+		JLabel registerUsernamelbl = new JLabel("Erabiltzailea:"); // Username:
 		registerUsernamelbl.setForeground(Color.WHITE);
 		registerUsernamelbl.setFont(new Font("Arial", Font.BOLD, 15));
 		registerUsernamelbl.setBounds(36, 182, 90, 25);
@@ -222,7 +223,7 @@ public class AuthForm extends JFrame {
 		registerUsername.setBounds(136, 182, 186, 25);
 		registerPanel.add(registerUsername);
 		
-		JLabel registerPasswordlbl = new JLabel("Password:");
+		JLabel registerPasswordlbl = new JLabel("Pasahitza:"); //Password:
 		registerPasswordlbl.setForeground(Color.WHITE);
 		registerPasswordlbl.setFont(new Font("Arial", Font.BOLD, 15));
 		registerPasswordlbl.setBounds(37, 252, 90, 25);
@@ -236,7 +237,7 @@ public class AuthForm extends JFrame {
 		registerPassword.setBounds(136, 252, 186, 25);
 		registerPanel.add(registerPassword);
 		
-		JButton registerCreateAccount = new JButton("Sing Up");
+		JButton registerCreateAccount = new JButton("Sortu"); // Sing Up
 		registerCreateAccount.setForeground(Color.WHITE);
 		registerCreateAccount.setFont(new Font("Arial", Font.BOLD, 16));
 		registerCreateAccount.setBackground(new Color(62, 62, 62));
@@ -251,7 +252,7 @@ public class AuthForm extends JFrame {
 		registerPanel.add(registerBannerButton);
 		windowButtons.add(registerBannerButton);
 		
-		JLabel registerPasswordRepeatlbl = new JLabel("Password:");
+		JLabel registerPasswordRepeatlbl = new JLabel("Pasahitza:"); // Password: 
 		registerPasswordRepeatlbl.setToolTipText("Repeat password");
 		registerPasswordRepeatlbl.setForeground(Color.WHITE);
 		registerPasswordRepeatlbl.setFont(new Font("Arial", Font.BOLD, 15));
@@ -292,7 +293,7 @@ public class AuthForm extends JFrame {
 		registerPanel.add(gotoLogin);
 		windowButtons.add(gotoLogin);
 		
-		JLabel registerEmaillbl = new JLabel("Email:");
+		JLabel registerEmaillbl = new JLabel("Emaila:"); // Email:
 		registerEmaillbl.setForeground(Color.WHITE);
 		registerEmaillbl.setFont(new Font("Arial", Font.BOLD, 15));
 		registerEmaillbl.setBounds(37, 217, 90, 25);
@@ -315,19 +316,19 @@ public class AuthForm extends JFrame {
 				String passwordRepeat = registerPasswordrepeat.getText();
 				
 				if (username.length() < 3 || username.length() > 15) {
-					NotifyUtils.error("invalid username, use between 3 and 15 characters.", "User Error!");
+					NotifyUtils.error("izen baliogabea. 3-15 arteko izen bat erabili.", "User Error!"); // invalid username, use between 3 and 15 characters.
                     FileUtils.logToFile("User Error!, invalid username, use between 3 and 15 characters.");
                     return;
 				} else if (email.length() < 3 || !email.contains("@") || !email.contains(".")) {
-					NotifyUtils.error("invalid email.", "User Error!");
+					NotifyUtils.error("email txarra.", "User Error!"); // invalid email.
                     FileUtils.logToFile("User Error!, invalid email.");
                     return;
 				} else if (password.length() < 3) {
-					NotifyUtils.error("invalid password, please use a longer one.", "User Error!");
+					NotifyUtils.error("Pasahitza oso motxa da.", "User Error!"); // invalid password, please use a longer one.
                     FileUtils.logToFile("User Error!, invalid password, please use a longer one.");
                     return;
 				} else if (!password.equals(passwordRepeat)) {
-					NotifyUtils.error("invalid password check, password dont match.", "User Error!");
+					NotifyUtils.error("Pasahitza ez dago ondo ipinita.", "User Error!"); // invalid password check, password dont match.
                     FileUtils.logToFile("User Error!, invalid password check, password dont match.");
                     return;
 				}
@@ -355,6 +356,7 @@ public class AuthForm extends JFrame {
 							u.getUsername().equals(username) && 
 							u.getHaxPassword().equals(password)
 						) {
+				        AuthUtils.logged_user = u;
 						success_login = true;
 					}
 				}

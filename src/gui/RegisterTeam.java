@@ -121,7 +121,7 @@ public class RegisterTeam extends JFrame {
 		contentPanel.add(teamNameTxb);
 		teamNameTxb.setColumns(10);
 		
-		JLabel lblTeamName = new JLabel("Team Name: ");
+		JLabel lblTeamName = new JLabel("Izena:"); // Team Name
 		lblTeamName.setVerticalAlignment(SwingConstants.CENTER);
 		lblTeamName.setForeground(Color.WHITE);
 		lblTeamName.setFont(new Font("Arial", Font.BOLD, 20));
@@ -129,7 +129,7 @@ public class RegisterTeam extends JFrame {
 		lblTeamName.setBounds(109, 76, 149, 32);
 		contentPanel.add(lblTeamName);
 		
-		JLabel lblTeamCode = new JLabel("Team Code: ");
+		JLabel lblTeamCode = new JLabel("Kodea:"); // Team Code
 		lblTeamCode.setVerticalAlignment(SwingConstants.CENTER);
 		lblTeamCode.setForeground(Color.WHITE);
 		lblTeamCode.setFont(new Font("Arial", Font.BOLD, 20));
@@ -145,14 +145,14 @@ public class RegisterTeam extends JFrame {
 		teamCodeTxb.setEnabled(false);
 		contentPanel.add(teamCodeTxb);
 		
-		JCheckBox generateCodeChckbx = new JCheckBox("Generate Code");
+		JCheckBox generateCodeChckbx = new JCheckBox("Kode Automatikoa"); //Generate Code
 		generateCodeChckbx.setForeground(new Color(255, 255, 255));
 		generateCodeChckbx.setBackground(new Color(37, 37, 38));
 		generateCodeChckbx.setSelected(true);
 		generateCodeChckbx.setBounds(272, 175, 196, 21);
 		contentPanel.add(generateCodeChckbx);
 		
-		JButton btnNewButton = new JButton("Create Team");
+		JButton btnNewButton = new JButton("Sortu Taldea"); // Create Team
 		btnNewButton.setBackground(new Color(70, 70, 75));
 		btnNewButton.setForeground(new Color(255, 255, 255));
 		btnNewButton.setBounds(109, 241, 359, 38);

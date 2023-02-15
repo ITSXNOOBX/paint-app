@@ -80,7 +80,7 @@ public class RegisterCoach extends JFrame {
 //	        try {
 //				UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 //	        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e) { } // https://stackoverflow.com/a/11426036/15384495
-	        setTitle("Paintball Fed 2023 | Register Coach");
+	        setTitle("Paintball Fed 2023 | Register Coach"); // 
 	        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	        setBounds(100, 100, 580, 350);
 	        
@@ -97,7 +97,7 @@ public class RegisterCoach extends JFrame {
 			contentPanel.add(header);
 			header.setLayout(null);
 			
-			JLabel lblCreateTeam = new JLabel("Create Coach For Team: ");
+			JLabel lblCreateTeam = new JLabel("Sortu entrenatzailea: "); // Create Coach For Team
 			lblCreateTeam.setForeground(new Color(255, 255, 255));
 			lblCreateTeam.setBackground(new Color(45, 45, 48));
 			lblCreateTeam.setFont(new Font("Arial", Font.BOLD, 25));
@@ -134,7 +134,7 @@ public class RegisterCoach extends JFrame {
 			contentPanel.add(playerName);
 			playerName.setColumns(10);
 			
-			JLabel playerNamelbl = new JLabel("Coach Name: ");
+			JLabel playerNamelbl = new JLabel("Izena:"); // Coach Name: 
 			playerNamelbl.setVerticalAlignment(SwingConstants.CENTER);
 			playerNamelbl.setForeground(Color.WHITE);
 			playerNamelbl.setFont(new Font("Arial", Font.BOLD, 15));
@@ -142,7 +142,7 @@ public class RegisterCoach extends JFrame {
 			playerNamelbl.setBounds(109, 100, 155, 20);
 			contentPanel.add(playerNamelbl);
 			
-			JLabel playerSurnameLbl = new JLabel("Coach Surnames:");
+			JLabel playerSurnameLbl = new JLabel("Abizena:"); // Coach Surnames:
 			playerSurnameLbl.setToolTipText("Separate each surname with comma.");
 			playerSurnameLbl.setVerticalAlignment(SwingConstants.CENTER);
 			playerSurnameLbl.setForeground(Color.WHITE);
@@ -159,14 +159,14 @@ public class RegisterCoach extends JFrame {
 			playerSurname.setBounds(319, 132, 149, 20);
 			contentPanel.add(playerSurname);
 			
-			JButton playerCreate = new JButton("Create Coach");
+			JButton playerCreate = new JButton("Sortu"); // Create Coach
 			playerCreate.setBackground(new Color(70, 70, 75));
 			playerCreate.setForeground(new Color(255, 255, 255));
 			playerCreate.setBounds(109, 275, 359, 38);
 			contentPanel.add(playerCreate);
 			windowButtons.add(playerCreate);
 			
-			JLabel playerNanlbl = new JLabel("Coach NAN:");
+			JLabel playerNanlbl = new JLabel("NAN:"); // Coach NAN:
 			playerNanlbl.setVerticalAlignment(SwingConstants.CENTER);
 			playerNanlbl.setToolTipText("");
 			playerNanlbl.setForeground(Color.WHITE);
@@ -183,7 +183,7 @@ public class RegisterCoach extends JFrame {
 			playerNan.setBounds(319, 162, 149, 20);
 			contentPanel.add(playerNan);
 			
-			JLabel playerAgelbl = new JLabel("Coach Age:");
+			JLabel playerAgelbl = new JLabel("Adina:"); //Coach Age: 
 			playerAgelbl.setVerticalAlignment(SwingConstants.CENTER);
 			playerAgelbl.setToolTipText("");
 			playerAgelbl.setForeground(Color.WHITE);

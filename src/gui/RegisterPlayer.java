@@ -96,7 +96,7 @@ public class RegisterPlayer extends JFrame {
 			contentPanel.add(header);
 			header.setLayout(null);
 			
-			JLabel lblCreateTeam = new JLabel("Create Player For Team: ");
+			JLabel lblCreateTeam = new JLabel("Sortu jokalaria: "); //Create Player For Team: 
 			lblCreateTeam.setForeground(new Color(255, 255, 255));
 			lblCreateTeam.setBackground(new Color(45, 45, 48));
 			lblCreateTeam.setFont(new Font("Arial", Font.BOLD, 25));
@@ -133,7 +133,7 @@ public class RegisterPlayer extends JFrame {
 			contentPanel.add(playerName);
 			playerName.setColumns(10);
 			
-			JLabel playerNamelbl = new JLabel("Player Name: ");
+			JLabel playerNamelbl = new JLabel("Izena:"); // Player Name: 
 			playerNamelbl.setVerticalAlignment(SwingConstants.CENTER);
 			playerNamelbl.setForeground(Color.WHITE);
 			playerNamelbl.setFont(new Font("Arial", Font.BOLD, 15));
@@ -141,7 +141,7 @@ public class RegisterPlayer extends JFrame {
 			playerNamelbl.setBounds(109, 75, 133, 20);
 			contentPanel.add(playerNamelbl);
 			
-			JLabel playerSurnameLbl = new JLabel("Player Surnames:");
+			JLabel playerSurnameLbl = new JLabel("Abizena:"); // Player Surnames:
 			playerSurnameLbl.setToolTipText("Separate each surname with comma.");
 			playerSurnameLbl.setVerticalAlignment(SwingConstants.CENTER);
 			playerSurnameLbl.setForeground(Color.WHITE);
@@ -158,14 +158,14 @@ public class RegisterPlayer extends JFrame {
 			playerSurname.setBounds(319, 107, 149, 20);
 			contentPanel.add(playerSurname);
 			
-			JButton playerCreate = new JButton("Create Player");
+			JButton playerCreate = new JButton("Sortu");  // Create Player
 			playerCreate.setBackground(new Color(70, 70, 75));
 			playerCreate.setForeground(new Color(255, 255, 255));
 			playerCreate.setBounds(109, 275, 359, 38);
 			contentPanel.add(playerCreate);
 			windowButtons.add(playerCreate);
 			
-			JLabel playerNanlbl = new JLabel("Player NAN:");
+			JLabel playerNanlbl = new JLabel("NAN:"); // Player NAN:
 			playerNanlbl.setVerticalAlignment(SwingConstants.CENTER);
 			playerNanlbl.setToolTipText("");
 			playerNanlbl.setForeground(Color.WHITE);
@@ -182,7 +182,7 @@ public class RegisterPlayer extends JFrame {
 			playerNan.setBounds(319, 137, 149, 20);
 			contentPanel.add(playerNan);
 			
-			JLabel playerAgelbl = new JLabel("Player Age:");
+			JLabel playerAgelbl = new JLabel("Adina:"); // Player Age:
 			playerAgelbl.setVerticalAlignment(SwingConstants.CENTER);
 			playerAgelbl.setToolTipText("");
 			playerAgelbl.setForeground(Color.WHITE);
@@ -199,7 +199,7 @@ public class RegisterPlayer extends JFrame {
 			playerAge.setBounds(319, 168, 149, 20);
 			contentPanel.add(playerAge);
 			
-			JLabel playerNumberlbl = new JLabel("Player Number:");
+			JLabel playerNumberlbl = new JLabel("Zenbakia:"); // Player Number:
 			playerNumberlbl.setVerticalAlignment(SwingConstants.CENTER);
 			playerNumberlbl.setToolTipText("");
 			playerNumberlbl.setForeground(Color.WHITE);
@@ -216,7 +216,7 @@ public class RegisterPlayer extends JFrame {
 			playerNumber.setBounds(319, 198, 149, 20);
 			contentPanel.add(playerNumber);
 			
-			JLabel playerHeadlinelbl = new JLabel("Headline:");
+			JLabel playerHeadlinelbl = new JLabel("Titularra:"); // Headline
 			playerHeadlinelbl.setVerticalAlignment(SwingConstants.CENTER);
 			playerHeadlinelbl.setToolTipText("");
 			playerHeadlinelbl.setForeground(Color.WHITE);
@@ -225,7 +225,7 @@ public class RegisterPlayer extends JFrame {
 			playerHeadlinelbl.setBounds(109, 226, 133, 20);
 			contentPanel.add(playerHeadlinelbl);
 			
-			JCheckBox playerHeadline = new JCheckBox("Headline");
+			JCheckBox playerHeadline = new JCheckBox("Titularra"); // Headline
 			playerHeadline.setForeground(new Color(255, 255, 255));
 			playerHeadline.setBackground(new Color(37, 37, 38));
 			playerHeadline.setBounds(319, 227, 149, 21);
