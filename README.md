@@ -2,7 +2,7 @@
 
 <div align="center">
 
-[![Build Status](https://github.com/ITSXNOOBX/paint-app/workflows/build/badge.svg?branch=main)](https://github.com/IMXNOOBX/FuFuClient/actions) <img src="https://img.shields.io/badge/java-1.2.0-green.svg?style=flat&logo=github">
+[![Build Status](https://badgen.net/github/checks/ITSXNOOBX/paint-app)](https://github.com/IMXNOOBX/FuFuClient/actions) <img src="https://img.shields.io/badge/java-1.2.0-green.svg?style=flat&logo=github"> <img src="https://badgen.net/badge/icon/eclipse?icon=eclipse&label"> <img src="https://badgen.net/github/release/ITSXNOOBX/paint-app"> <img src="https://badgen.net/github/license/ITSXNOOBX/paint-app">
 
 </div>
 
