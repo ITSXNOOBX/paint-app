@@ -6,7 +6,13 @@
 
 </div>
 
-Simple java app for a project we had to do in class.
+## 🌊 Description
+* Simple java app for a project we had to do in class.
+
+## ❄ Documentation
+ Click [**here**](https://itsxnoobx.github.io/paint-app/) to access developer documentations
+
+<br>
 
 <img src=".github/1.2.0.png">
 
