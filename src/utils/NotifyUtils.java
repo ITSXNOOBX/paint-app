@@ -17,7 +17,7 @@ public class NotifyUtils {
 	private static String cacheMsg;
 	
     /**
-     * * This function send a notification using java windows notifications
+     * * This function send a notification using java windows notifications.
      * @Param message : String
      * @Param title : String
      * @Param type : MessageType
@@ -47,7 +47,7 @@ public class NotifyUtils {
 	}
 	
     /**
-     * * This function send a success windows tray notification
+     * * This function send a success windows tray notification.
      * @Param message : String
      * @Param title : String
      *
@@ -58,7 +58,7 @@ public class NotifyUtils {
 	}
 	
     /**
-     * * This function send a warn windows tray notification
+     * * This function send a warn windows tray notification.
      * @Param message : String
      * @Param title : String
      *
@@ -69,7 +69,8 @@ public class NotifyUtils {
 	}
 	
     /**
-     * * This function send a error windows tray notification
+     * * This function send a error windows tray notification.
+     * 
      * @Param message : String
      * @Param title : String
      *

@@ -16,7 +16,7 @@ public class DataUtils {
 	public static ArrayList<team> teams = new ArrayList<team>();
 	
     /**
-     * * The function will read all the data stored in the files
+     * * The function will read all the data stored in the files.
      * @output players
      * @output coaches
      * @output matches
@@ -49,7 +49,7 @@ public class DataUtils {
 	}
 	
     /**
-     * * The function will write all the data and store it the files
+     * * The function will write all the data and store it in files.
      * @output status : Boolean
      */
 	public static Boolean write() {

@@ -19,7 +19,7 @@ public class SingleInstanceUtils {
     // https://stackoverflow.com/a/20015771
     
     /**
-     * * This will check if the app-client.lock is locked or not to check if the app is running
+     * * This will check if the app-client.lock is locked or not to check if the app is running.
      * @output isrunning : Boolean
      */
     public static boolean checkIfAlreadyRunning() {
@@ -51,7 +51,7 @@ public class SingleInstanceUtils {
     }
     
     /**
-     * * This function will unlock the file indicating the program is no longer running
+     * * This function will unlock the file indicating the program is no longer running.
      */
     public static void unlockFile() {
         try {

@@ -131,7 +131,7 @@ public class FileUtils {
     }
     
     /**
-     * * This function will delete all the files in the directory
+     * * This function will delete all the files in the directory.
      * @Param path : String
      *
      * @output status : Boolean
@@ -146,7 +146,7 @@ public class FileUtils {
     }
     
     /**
-     * * This function will delete all the files in the directory and the directory
+     * * This function will delete all the files in the directory and the directory.
      * @Param path : String
      *
      * @output status : Boolean
@@ -161,7 +161,7 @@ public class FileUtils {
     }
     
     /**
-     * * This function write an object to a file
+     * * This function write an object to a file.
      * @Param obj : ArrayList<?>
      *
      * @output status : Boolean
@@ -203,7 +203,7 @@ public class FileUtils {
     }
 
     /**
-     * * This function read an object from a file
+     * * This function read an object from a file.
      * @Param obj : ArrayList<?>
      *
      * @output status : Boolean
