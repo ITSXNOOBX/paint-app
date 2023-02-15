@@ -34,6 +34,14 @@ public class FileUtils {
     public static final String path_users = auth_root + "usr";
 
 
+    /**
+     * * The function will write to the log file.
+     * @Param text : String
+     *
+     * @Param supressConsole : Boolean
+     *
+     * @output status : Boolean
+     */
     public static boolean logToFile(String text, Boolean... supressConsole) {   
     	String prefix = "[" + new SimpleDateFormat("HH:mm:ss").format(new Date()) + "] ";
     	if (!(supressConsole.length > 0
@@ -54,6 +62,14 @@ public class FileUtils {
         return true;
     }
     
+    /**
+     * * The function will write to a file.
+     * @Param path : String
+     * @Param text : String
+     * @Param append : Boolean
+     *
+     * @output status : Boolean
+     */
     public static boolean writeToFile(String path, String text, Boolean append) {   
     	if (path == null) path = cache_root + "data";
     	if (text == null) return false;
@@ -70,6 +86,12 @@ public class FileUtils {
         return true;
     }
     
+    /**
+     * * The function will read from a file.
+     * @Param path : String
+     *
+     * @output data : String
+     */
     public static String readFromFile(String path) {   
     	if (path == null) return null;
     	String data = "";
@@ -87,6 +109,12 @@ public class FileUtils {
         return data;
     }
     
+    /**
+     * * The function will read raw data from a file.
+     * @Param text : String
+     *
+     * @output status : Boolean
+     */
     public static byte[] readBytesFromFile(String path) {   
     	if (path == null) return null;
     	byte[] data = null;
@@ -102,6 +130,12 @@ public class FileUtils {
     	return data;
     }
     
+    /**
+     * * This function will delete all the files in the directory
+     * @Param path : String
+     *
+     * @output status : Boolean
+     */
     public static Boolean clearDirectory(File dir) {
     	Boolean status = true;
     	if (dir.listFiles() == null) return false;
@@ -110,6 +144,13 @@ public class FileUtils {
     	        status = file.delete();
     	return status;
     }
+    
+    /**
+     * * This function will delete all the files in the directory and the directory
+     * @Param path : String
+     *
+     * @output status : Boolean
+     */
     public static Boolean removeDirectory(File dir) {
     	Boolean status = true;
     	if (dir.listFiles() == null) return false;
@@ -119,6 +160,12 @@ public class FileUtils {
     	return status;
     }
     
+    /**
+     * * This function write an object to a file
+     * @Param obj : ArrayList<?>
+     *
+     * @output status : Boolean
+     */
     public static boolean writeObjectToFile(ArrayList<?> obj) {
         Boolean status = true;
     	String path = "";
@@ -155,6 +202,12 @@ public class FileUtils {
         return status;
     }
 
+    /**
+     * * This function read an object from a file
+     * @Param obj : ArrayList<?>
+     *
+     * @output status : Boolean
+     */
     public static Object readObjectsFromFile(String obj_type) {
         String path = "";
         if(obj_type.equals("coach")) {

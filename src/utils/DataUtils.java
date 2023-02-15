@@ -15,6 +15,15 @@ public class DataUtils {
 	public static ArrayList<match> matches = new ArrayList<match>();
 	public static ArrayList<team> teams = new ArrayList<team>();
 	
+    /**
+     * * The function will read all the data stored in the files
+     * @output players
+     * @output coaches
+     * @output matches
+     * @output teams
+     * 
+     * @output status : Boolean
+     */
 	@SuppressWarnings({ "null", "unchecked" })
 	public static Boolean read() {
 		Boolean status = true;
@@ -39,6 +48,10 @@ public class DataUtils {
 		return status;
 	}
 	
+    /**
+     * * The function will write all the data and store it the files
+     * @output status : Boolean
+     */
 	public static Boolean write() {
 		Boolean status = true;
 		if (players.size() != 0 && !FileUtils.writeObjectToFile(players)) status = false;

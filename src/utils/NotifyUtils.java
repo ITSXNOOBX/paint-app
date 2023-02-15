@@ -16,6 +16,14 @@ public class NotifyUtils {
 	private static SystemTray tray = SystemTray.getSystemTray();
 	private static String cacheMsg;
 	
+    /**
+     * * This function send a notification using java windows notifications
+     * @Param message : String
+     * @Param title : String
+     * @Param type : MessageType
+     *
+     * @output status : Boolean
+     */
 	private static Boolean showTray(String message, String title, MessageType type) {
 		if (!supported) return false;
 		if (message == null) return false;
@@ -38,14 +46,35 @@ public class NotifyUtils {
 
 	}
 	
+    /**
+     * * This function send a success windows tray notification
+     * @Param message : String
+     * @Param title : String
+     *
+     * @output status : Boolean
+     */
 	public static Boolean succeed(String message, String title) {
 		return showTray(message, title, MessageType.INFO);
 	}
 	
+    /**
+     * * This function send a warn windows tray notification
+     * @Param message : String
+     * @Param title : String
+     *
+     * @output status : Boolean
+     */
 	public static Boolean warn(String message, String title) {
 		return showTray(message, title, MessageType.WARNING);
 	}
 	
+    /**
+     * * This function send a error windows tray notification
+     * @Param message : String
+     * @Param title : String
+     *
+     * @output status : Boolean
+     */
 	public static Boolean error(String message, String title) {
 		return showTray(message, title, MessageType.ERROR);
 	}

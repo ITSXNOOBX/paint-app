@@ -24,6 +24,13 @@ public class WindowUtils extends JFrame  {
     private static int mouseX, mouseY;
     private static char[] number = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9' };
 	
+    /**
+     * * This function adds the data from a dlm to a combo box
+     * @Param dlm : DefaultListModel<?>
+     * @Param combo : JComboBox<Object>
+     *
+     * @output status : Boolean
+     */
     public static void dlmToComboBoxAdd(DefaultListModel<?> dlm, JComboBox<Object> combo) {   
     	combo.removeAllItems(); // Easyer to clean and set again :D
     	for (int i = 0; i < dlm.getSize(); i++) {
@@ -31,6 +38,13 @@ public class WindowUtils extends JFrame  {
         }
     }
     
+    /**
+     * * This function adds the data from an ArrayList to a combo box
+     * @Param arl : ArrayList<?>
+     * @Param combo : JComboBox<Object>
+     *
+     * @output status : Boolean
+     */
     public static void ARLToComboBoxAdd(ArrayList<?> arl, JComboBox<Object> combo) {   
     	combo.removeAllItems(); // Easyer to clean and set again :D
     	for (int i = 0; i < arl.size(); i++) {
@@ -38,6 +52,12 @@ public class WindowUtils extends JFrame  {
     	}
     }
     
+    /**
+     * * This function checks if a character is a number
+     * @Param key : char
+     *
+     * @output status : Boolean
+     */
     public static Boolean isNumberChar(char key) {   
     	for (char n : number) if (n == key) return true;
     	return false;
@@ -50,6 +70,11 @@ public class WindowUtils extends JFrame  {
         }
     }
     
+    /**
+     * * This function will calculate the mouse position + the window size to handle the movement of the window in the screen
+     * @Param frame : JFrame
+     * @Param enable : Boolean
+     */
 	public static void handleMouseDrag(JFrame frame, Boolean enable) {
 		if (!enable) return;
         // Handle mouse drag
@@ -68,6 +93,10 @@ public class WindowUtils extends JFrame  {
         });
 	}
 	
+    /**
+     * * This function will set the style for all the buttons in the window
+     * @Param list : ArrayList<JButton> 
+     */
    public static void setWindowButtonStyle(ArrayList<JButton> list) {
         for (JButton button : list) {
                 button.setBorderPainted(false);
