@@ -23,6 +23,12 @@
 	• File Saving - We had to save all the data in files. 
 	• Auth/Session - Save last login credentials.
 ```
+**ToDo**
+
+- [ ] Automatic translations
+- [ ] Database connection 
+- [ ] Proper auth system
+- [ ] Automatic build system on push
 
 ## 🪁 Simple Use
 
