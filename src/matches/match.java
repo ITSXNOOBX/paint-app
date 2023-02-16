@@ -79,6 +79,6 @@ public class match implements Serializable {
 
 		@Override
 		public String toString() {
-			return "Local team:  " + local + " scored " + localPoints + " vs Outsider team: " + outsider + " scored " + outsiderPoints + "; Winner: " + getWinner();
+			return "Talde lokal:  " + local + " puntu " + localPoints + " egin ditu vs Kanpoko talde: " + outsider + " puntu " + outsiderPoints + " egin ditu; Irabazlea: " + getWinner();
 		}
 }

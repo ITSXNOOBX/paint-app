@@ -12,6 +12,6 @@ public class classification extends team {
 	}
 	
 	public String toString() {
-		return "(" +super.getKlasifikation() +") " + super.getName() + ", points: " + super.getPoints();
+		return "(" +super.getKlasifikation() +") " + super.getName() + ", " + super.getPoints() + " puntu.";
 	}
 }

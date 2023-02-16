@@ -50,10 +50,10 @@ public class score implements Serializable {
 	@Override
 	public String toString() {
 		if (local == 2)
-			return "O | " + scorer + " scored " + points + " points";
+			return "O | " + scorer + " - " + points + " puntu egin ditu.";
 		else if (local == 1)
-			return "L | " +scorer + " scored " + points + " points";
+			return "L | " +scorer + " - " + points + " puntu egin ditu.";
 		
-		return scorer + " scored " + points + " points";
+		return scorer + " - " + points + " puntu egin ditu";
 	}
 }

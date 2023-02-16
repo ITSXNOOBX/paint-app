@@ -288,7 +288,7 @@ public class MainForm extends JFrame {
 
 		homePanelWindow = new JPanel();
 		homePanelWindow.setBackground(new Color(45, 45, 48));
-		layeredPane.setLayer(homePanelWindow, 0);
+		layeredPane.setLayer(homePanelWindow, 4);
 		homePanelWindow.setBounds(0, 0, 580, 450);
 		layeredPane.add(homePanelWindow);
 		homePanelWindow.setLayout(null);
@@ -348,7 +348,7 @@ public class MainForm extends JFrame {
 		JLabel lblCoach = new JLabel("Entrenatzailea:"); // Coach
 		lblCoach.setForeground(Color.WHITE);
 		lblCoach.setFont(new Font("Arial", Font.BOLD, 13));
-		lblCoach.setBounds(370, 146, 83, 20);
+		lblCoach.setBounds(370, 146, 115, 20);
 		homePanelWindow.add(lblCoach);
 
 		homePointsTextfield = new JTextField();
@@ -357,7 +357,7 @@ public class MainForm extends JFrame {
 		homePointsTextfield.setBounds(465, 177, 50, 20);
 		homePanelWindow.add(homePointsTextfield);
 
-		JLabel homePointsLbl = new JLabel("Points:");
+		JLabel homePointsLbl = new JLabel("Puntuak:"); // Points:
 		homePointsLbl.setForeground(Color.WHITE);
 		homePointsLbl.setFont(new Font("Arial", Font.BOLD, 13));
 		homePointsLbl.setBounds(370, 177, 83, 20);
@@ -457,7 +457,7 @@ public class MainForm extends JFrame {
 		homePanelWindow.add(lblNewLabel);
 
 		leaguePanelWindow = new JPanel();
-		layeredPane.setLayer(leaguePanelWindow, 4);
+		layeredPane.setLayer(leaguePanelWindow, 1);
 		leaguePanelWindow.setBackground(new Color(45, 45, 48));
 		leaguePanelWindow.setBounds(0, 0, 580, 450);
 		layeredPane.add(leaguePanelWindow);
@@ -647,7 +647,7 @@ public class MainForm extends JFrame {
 		leagueOutsiderTeamList.setBounds(384, 45, 180, 21);
 		matchesSubPanel.add(leagueOutsiderTeamList);
 		
-		JLabel leagueOutsiderTeamSelectedPlayer = new JLabel("Select Player");
+		JLabel leagueOutsiderTeamSelectedPlayer = new JLabel("Aukeratu"); // Select Player
 		leagueOutsiderTeamSelectedPlayer.setHorizontalAlignment(SwingConstants.RIGHT);
 		leagueOutsiderTeamSelectedPlayer.setForeground(Color.WHITE);
 		leagueOutsiderTeamSelectedPlayer.setFont(new Font("Arial", Font.BOLD, 15));
@@ -1570,7 +1570,7 @@ public class MainForm extends JFrame {
 		currentWindow = window;
 		switch (window) {
 		case 0:
-			lblnAppRoute.setText("PaintApp \\ Home");
+			lblnAppRoute.setText("PaintApp \\ Extea");
 			homePanelWindow.setVisible(true);
 
 			leaguePanelWindow.setVisible(false);
@@ -1578,7 +1578,7 @@ public class MainForm extends JFrame {
 			settingsPanelWindow.setVisible(false);
 			break;
 		case 1:
-			lblnAppRoute.setText("PaintApp \\ League");
+			lblnAppRoute.setText("PaintApp \\ Liga");
 			homePanelWindow.setVisible(false);
 
 			leaguePanelWindow.setVisible(true);
@@ -1587,7 +1587,7 @@ public class MainForm extends JFrame {
 			settingsPanelWindow.setVisible(false);
 			break;
 		case 2:
-			lblnAppRoute.setText("PaintApp \\ SetUp");
+			lblnAppRoute.setText("PaintApp \\ Konfigurazioa");
 			homePanelWindow.setVisible(false);
 			leaguePanelWindow.setVisible(false);
 
@@ -1596,7 +1596,7 @@ public class MainForm extends JFrame {
 			settingsPanelWindow.setVisible(false);
 			break;
 		case 3:
-			lblnAppRoute.setText("PaintApp \\ Settings");
+			lblnAppRoute.setText("PaintApp \\ Aldaketak");
 			homePanelWindow.setVisible(false);
 			leaguePanelWindow.setVisible(false);
 			setupLeagueWindow.setVisible(false);

@@ -120,7 +120,7 @@ public class AuthForm extends JFrame {
 		JLabel loginUsernamelbl = new JLabel("Erabiltzailea:"); // Username:
 		loginUsernamelbl.setForeground(new Color(255, 255, 255));
 		loginUsernamelbl.setFont(new Font("Arial", Font.BOLD, 15));
-		loginUsernamelbl.setBounds(36, 223, 90, 25);
+		loginUsernamelbl.setBounds(36, 223, 122, 25);
 		loginPanel.add(loginUsernamelbl);
 		
 		loginUsername = new JTextField();
@@ -212,7 +212,7 @@ public class AuthForm extends JFrame {
 		JLabel registerUsernamelbl = new JLabel("Erabiltzailea:"); // Username:
 		registerUsernamelbl.setForeground(Color.WHITE);
 		registerUsernamelbl.setFont(new Font("Arial", Font.BOLD, 15));
-		registerUsernamelbl.setBounds(36, 182, 90, 25);
+		registerUsernamelbl.setBounds(36, 182, 102, 25);
 		registerPanel.add(registerUsernamelbl);
 		
 		registerUsername = new JTextField();
